@@ -6,13 +6,13 @@
 //  Copyright (c) 2012年 mashroom. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "FeedViewController.h"
 
-@interface ViewController ()
+@interface FeedViewController ()
 
 @end
 
-@implementation ViewController
+@implementation FeedViewController
 
 - (void)viewDidLoad
 {
