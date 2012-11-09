@@ -7,6 +7,7 @@
 //
 
 #import "FeedViewController.h"
+#import "FeedAPI.h"
 
 @interface FeedViewController ()
 
@@ -14,16 +15,56 @@
 
 @implementation FeedViewController
 
+#pragma mark -
+#pragma mark Initialization
+
+- (void)_initLayout {
+    scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    scrollView.backgroundColor = [UIColor grayColor];
+    scrollView.showsHorizontalScrollIndicator = YES;
+    scrollView.showsVerticalScrollIndicator   = YES;
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height * NUM_OF_PAGES);
+    [self.view addSubview:scrollView];
+}
+
+#pragma mark -
+#pragma mark ViewLifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    [self _initLayout];
+    
+    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"recently", @"categoryId",
+                           @"sort", @"a",
+                           nil];
+    FeedAPI* feedAPI = [[FeedAPI alloc] initWithModule:@"feed.php"];
+    [feedAPI send:param];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    scrollView.frame = self.view.bounds;
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height * NUM_OF_PAGES);
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 
+#pragma mark Rotation
+
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+
+- (UIInterfaceOrientation)interfaceOrientation {
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 @end

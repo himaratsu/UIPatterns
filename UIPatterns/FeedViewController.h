@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define NUM_OF_PAGES 10
+
 @interface FeedViewController : UIViewController {
     UIScrollView* scrollView;
 }
