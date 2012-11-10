@@ -11,9 +11,10 @@
 #define kUIPatternsBaseUrl @"http://samura1.net/collection/uipatterns/api/"
 
 @protocol HttpRequestDelegate
-- (void)didStartHttpResuest;
-- (void)didEndHttpResuest;
-- (void)didErrorHttpRequest;
+@required
+- (void)didStartHttpResuest:(id)result;
+- (void)didEndHttpResuest:(id)result;
+- (void)didErrorHttpRequest:(id)result;
 @end
 
 
@@ -22,7 +23,10 @@
     id<HttpRequestDelegate> delegate_;
 }
 
+@property (strong) id<HttpRequestDelegate> delegate;
+
 - (id)initWithDelegate:(id)delegate;
 - (void)send:(NSDictionary*)param;
+- (void)parse:(NSDictionary*)dic;
 
 @end

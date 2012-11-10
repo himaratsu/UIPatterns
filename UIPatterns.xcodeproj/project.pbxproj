@@ -20,6 +20,7 @@
 		200D3F0A164C4B0D00443D76 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 200D3F08164C4B0D00443D76 /* FeedViewController.xib */; };
 		200D3F18164C510C00443D76 /* CommonAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F17164C510C00443D76 /* CommonAPI.m */; };
 		200D3F1B164C557600443D76 /* FeedAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F1A164C557600443D76 /* FeedAPI.m */; };
+		20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C65FE6164E4D2700F9F343 /* UIPattern.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,8 @@
 		200D3F17164C510C00443D76 /* CommonAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonAPI.m; sourceTree = "<group>"; };
 		200D3F19164C557600443D76 /* FeedAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedAPI.h; sourceTree = "<group>"; };
 		200D3F1A164C557600443D76 /* FeedAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedAPI.m; sourceTree = "<group>"; };
+		20C65FE5164E4D2700F9F343 /* UIPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPattern.h; sourceTree = "<group>"; };
+		20C65FE6164E4D2700F9F343 /* UIPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPattern.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				200D3F15164C4CF900443D76 /* API */,
+				20C65FE5164E4D2700F9F343 /* UIPattern.h */,
+				20C65FE6164E4D2700F9F343 /* UIPattern.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -237,6 +242,7 @@
 				200D3F07164C4B0D00443D76 /* FeedViewController.m in Sources */,
 				200D3F18164C510C00443D76 /* CommonAPI.m in Sources */,
 				200D3F1B164C557600443D76 /* FeedAPI.m in Sources */,
+				20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,5 +18,17 @@
     return self;
 }
 
+- (void)parse:(NSDictionary*)dic {
+    NSLog(@"FeedAPIParser#parse");
+}
+
+@end
+
+
+@implementation FeedAPIParser
+
+- (void)parse:(NSDictionary*)dic {
+
+}
 
 @end

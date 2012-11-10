@@ -11,6 +11,8 @@
 
 @interface FeedAPI : CommonAPI
 
+@end
 
+@interface FeedAPIParser : NSObject
 
 @end

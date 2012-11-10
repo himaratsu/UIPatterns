@@ -70,16 +70,16 @@
 #pragma mark -
 #pragma mark HttpRequestDelegate 
 
-- (void)didStartHttpResuest {
+- (void)didStartHttpResuest:(id)sender {
     NSLog(@"通信スタート");
 }
 
-- (void)didEndHttpResuest {
-    
+- (void)didEndHttpResuest:(id)sender {
+    NSLog(@"通信成功");
 }
 
-- (void)didErrorHttpRequest {
-    
+- (void)didErrorHttpRequest:(id)sender {
+    NSLog(@"通信エラー");
 }
 
 @end
