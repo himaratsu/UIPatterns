@@ -26,7 +26,7 @@
 
 - (NSString*)makeUrl:(NSDictionary *)param {
     NSMutableString* url = [[NSMutableString alloc] initWithString:kUIPatternsBaseUrl];
-    [url appendString:module];
+    [url appendString:module_];
     [url appendString:@"?"];
     [url appendString:[self composeKeyAndValueParams:param]];
     
@@ -36,7 +36,25 @@
 
 - (void)send:(NSDictionary *)param {
     // TODO: APIにアクセス
-    NSString* url = [self makeUrl:param];
-    NSLog(@"url = %@", url);
+    NSString* urlStr = [self makeUrl:param];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    NSLog(@"%@", urlStr);
+    
+    NSURLResponse *res;
+    NSError *err = nil;
+    
+    // 通信開始
+    [delegate_ didStartHttpResuest];
+    NSData* data = [NSURLConnection sendSynchronousRequest:req
+                                         returningResponse:&res
+                                                     error:&err];
+    [delegate_ didEndHttpResuest];
+    
+    // 結果のJSONをパース
+    NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data
+                                                        options:NSJSONReadingAllowFragments
+                                                          error:&err];
+    NSLog(@"dic = %@", dic);
 }
 @end

@@ -8,13 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-#define kUIPatternsBaseUrl @"http://samura1.net/collections/uipatterns/api/"
+#define kUIPatternsBaseUrl @"http://samura1.net/collection/uipatterns/api/"
+
+@protocol HttpRequestDelegate
+- (void)didStartHttpResuest;
+- (void)didEndHttpResuest;
+- (void)didErrorHttpRequest;
+@end
+
 
 @interface CommonAPI : NSObject {
-    NSString* module;
+    NSString* module_;
+    id<HttpRequestDelegate> delegate_;
 }
 
-- (id)initWithModule:(NSString*) mod;
+- (id)initWithDelegate:(id)delegate;
 - (void)send:(NSDictionary*)param;
 
 @end

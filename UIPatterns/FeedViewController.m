@@ -39,7 +39,7 @@
                            @"recently", @"categoryId",
                            @"sort", @"a",
                            nil];
-    FeedAPI* feedAPI = [[FeedAPI alloc] initWithModule:@"feed.php"];
+    FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
     [feedAPI send:param];
     
 }
@@ -65,6 +65,21 @@
 
 - (UIInterfaceOrientation)interfaceOrientation {
     return UIInterfaceOrientationMaskLandscape;
+}
+
+#pragma mark -
+#pragma mark HttpRequestDelegate 
+
+- (void)didStartHttpResuest {
+    NSLog(@"通信スタート");
+}
+
+- (void)didEndHttpResuest {
+    
+}
+
+- (void)didErrorHttpRequest {
+    
 }
 
 @end

@@ -10,9 +10,10 @@
 
 @implementation FeedAPI
 
-- (id)initWithModule:(NSString*) mod {
+- (id)initWithDelegate:(id)delegate {
     if (self = [super init]) {
-        module = mod;
+        module_ = @"feed.php";
+        delegate_ = delegate;
     }
     return self;
 }
