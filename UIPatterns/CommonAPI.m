@@ -32,9 +32,10 @@
 - (NSString*)makeUrl:(NSDictionary *)param {
     NSMutableString* url = [[NSMutableString alloc] initWithString:kUIPatternsBaseUrl];
     [url appendString:module_];
-    [url appendString:@"?"];
-    [url appendString:[self composeKeyAndValueParams:param]];
-    
+    if (param != nil) {
+        [url appendString:@"?"];
+        [url appendString:[self composeKeyAndValueParams:param]];
+    }
     return url;
 }
 
@@ -78,9 +79,9 @@
             NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:data
                                                                 options:NSJSONReadingAllowFragments
                                                                   error:&err];
-            [self parse:dic];
+            
             [self performSelectorOnMainThread:@selector(_didEndHttpRequest:)
-                                   withObject:dic
+                                   withObject:[self parse:dic]
                                 waitUntilDone:YES];
         }
     }
@@ -91,6 +92,9 @@
     [NSThread detachNewThreadSelector:@selector(_send:) toTarget:self withObject:param];
 }
 
+- (void)send {
+    [self send:nil];
+}
 
 #pragma mark -
 #pragma mark HttpRequestDelegate Method

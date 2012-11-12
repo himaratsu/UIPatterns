@@ -8,6 +8,8 @@
 
 #import "FeedViewController.h"
 #import "FeedAPI.h"
+#import "UIPattern.h"
+#import "UIPatternView.h"
 
 @interface FeedViewController ()
 
@@ -25,6 +27,13 @@
     scrollView.showsVerticalScrollIndicator   = YES;
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height * NUM_OF_PAGES);
     [self.view addSubview:scrollView];
+    
+    for (int i=0; i<3; i++) {
+        UIPatternView* uiPatternView = [[UIPatternView alloc] initWithFrame:CGRectMake(330*i + 22, 10, 320, 480)];
+        [self.view addSubview:uiPatternView];
+        
+        [uiPatternList addObject:uiPatternView];
+    }
 }
 
 #pragma mark -
@@ -33,14 +42,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self _initLayout];
     
-    NSDictionary* param = [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"recently", @"categoryId",
-                           @"sort", @"a",
-                           nil];
+    uiPatternList = [NSMutableArray array];
+    
+    [self _initLayout];
+
+    
+    
     FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
-    [feedAPI send:param];
+    [feedAPI send];
     
 }
 
@@ -60,7 +70,7 @@
 #pragma mark Rotation
 
 - (BOOL)shouldAutorotate {
-    return NO;
+    return YES;
 }
 
 - (UIInterfaceOrientation)interfaceOrientation {
@@ -76,6 +86,16 @@
 
 - (void)didEndHttpResuest:(id)sender {
     NSLog(@"通信成功");
+    NSDictionary* result = (NSDictionary*)sender;
+    
+    NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
+    
+    for (int i=0; i<3; i++) {
+        UIPattern* pattern = [uiPatterns objectAtIndex:i];
+        UIPatternView* uiPatternView = [uiPatternList objectAtIndex:i];
+        [scrollView addSubview:uiPatternView];
+        uiPatternView.imageUrl = pattern.imageUrl;
+    }
 }
 
 - (void)didErrorHttpRequest:(id)sender {

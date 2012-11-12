@@ -13,6 +13,10 @@
 
 @end
 
-@interface FeedAPIParser : NSObject
+@interface FeedAPIParser : NSObject {
+    NSMutableDictionary* result;
+}
+
+- (id)parse:(NSDictionary*)dic;
 
 @end

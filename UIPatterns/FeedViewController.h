@@ -13,6 +13,8 @@
 
 @interface FeedViewController : UIViewController<HttpRequestDelegate> {
     UIScrollView* scrollView;
+    
+    NSMutableArray* uiPatternList;
 }
 
 @end
