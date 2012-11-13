@@ -16,6 +16,9 @@
 #define LOG_CURRENT_METHOD ;
 #endif
 
+#define kDefaultBgColor     [UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]
+#define kDefaultAccentColor [UIColor colorWithRed:63/255.0 green:169/255.0 blue:245/255.0 alpha:1.0]
+
 @interface Util : NSObject
 
 + (void)hideStatusBar;
