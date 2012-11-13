@@ -7,24 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIPattern.h"
+
+@protocol ActionImageViewDelegate;
 
 @interface LazyImageView : UIImageView
 
-// Use this initializer.
 - (id)initWithFrame:(CGRect)frame withUrl:(NSURL *)url;
 
-// Start load the image of the specified url.
-// Doesn't load the image if an image has been already set.
 - (void)startLoadImage;
-
-// Reload load the image of the specified url.
-// Load the image even if a connection was already created.
 - (void)reloadImage;
-
-// Cancel loading if requesting.
 - (void)cancelLoading;
 
-// Set the url of the image to reqeust.
 @property (nonatomic, strong) NSURL *imageUrl;
+@property (nonatomic, strong) UIPattern* uiPattern;
+@property (nonatomic, weak) id<ActionImageViewDelegate> delegate;
+
+@end
+
+@protocol ActionImageViewDelegate <NSObject>
+
+- (void)touchesBeganWithUIPattern:(UIPattern*)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesMovedWithUIPattern:(UIPattern*)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesEndWithUIPattern:(UIPattern*)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event;
 
 @end

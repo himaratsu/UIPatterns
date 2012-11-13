@@ -67,6 +67,12 @@
 
 }
 
+- (void)reload {
+    [self _initLayout];
+    FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
+    [feedAPI send];
+}
+
 #pragma mark -
 #pragma mark ViewLifecycle
 
@@ -74,15 +80,7 @@
 {
     [super viewDidLoad];
     
-    uiPatternList = [NSMutableArray array];
-    
-    [self _initLayout];
-
-    
-    
-    FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
-    [feedAPI send];
-    
+    [self reload];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -141,6 +139,8 @@
         LazyImageView* lazyImageView = [[LazyImageView alloc]
                                         initWithFrame:CGRectMake(330*x + 30, 490*y + 120, 300, 450)
                                         withUrl:[NSURL URLWithString:pattern.imageUrl]];
+        lazyImageView.delegate = self;
+        lazyImageView.uiPattern = pattern;
         [lazyImageView startLoadImage];
         [scrollView addSubview:lazyImageView];
     }
@@ -148,6 +148,21 @@
 
 - (void)didErrorHttpRequest:(id)sender {
     NSLog(@"通信エラー");
+}
+
+#pragma mark -
+#pragma mark ActionImageViewDelegate
+
+- (void)touchesBeganWithUIPattern:(UIPattern *)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"uiPattern = %@", uiPattern.title);
+}
+
+- (void)touchesMovedWithUIPattern:(UIPattern *)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"uiPattern = %@", uiPattern.title);
+}
+
+- (void)touchesEndWithUIPattern:(UIPattern *)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"uiPattern = %@", uiPattern.title);
 }
 
 @end

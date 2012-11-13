@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonAPI.h"
+#import "LazyImageView.h"
 
 #define NUM_OF_PAGES 4
 
-@interface FeedViewController : UIViewController<HttpRequestDelegate> {
+@interface FeedViewController : UIViewController<HttpRequestDelegate, ActionImageViewDelegate> {
     UIScrollView* scrollView;
-    
-    NSMutableArray* uiPatternList;
 }
 
 @end

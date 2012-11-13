@@ -18,8 +18,8 @@ typedef enum LazyImageViewTag_ {
 - (void)setLoadingImage;
 - (void)setLoadErrorImage;
 
-@property (nonatomic, retain) NSURLConnection *connection;
-@property (nonatomic, retain) NSMutableData *data;
+@property (nonatomic, strong) NSURLConnection *connection;
+@property (nonatomic, strong) NSMutableData *data;
 
 @end
 
@@ -29,8 +29,14 @@ typedef enum LazyImageViewTag_ {
     self = [super initWithFrame:frame];
     
     if (self) {
+        // タッチ可能にする
+        self.userInteractionEnabled = YES;
+        
+        // 影をつける
         self.layer.shadowOpacity = 0.5;
         self.layer.shadowOffset = CGSizeMake(0.0, 4.0);
+        
+        // 画像URLをセット
         [self setImageUrl:url];
     }
     
@@ -121,5 +127,23 @@ typedef enum LazyImageViewTag_ {
 @synthesize imageUrl;
 @synthesize connection;
 @synthesize data;
+@synthesize uiPattern = uiPattern_;
+@synthesize delegate = delegate_;
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    LOG_CURRENT_METHOD;
+    [delegate_ touchesBeganWithUIPattern:uiPattern_
+     touches:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [delegate_ touchesMovedWithUIPattern:uiPattern_
+     touches:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [delegate_ touchesEndWithUIPattern:uiPattern_
+     touches:touches withEvent:event];
+}
 
 @end
