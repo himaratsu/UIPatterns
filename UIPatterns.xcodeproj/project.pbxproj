@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		200D384E1651449D0067FFCD /* UIPatternViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D384D1651449D0067FFCD /* UIPatternViewController.m */; };
 		200D3851165153A40067FFCD /* noimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 200D3850165153A40067FFCD /* noimage.png */; };
+		200D385416515A590067FFCD /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D385316515A590067FFCD /* Util.m */; };
 		200D3EEE164C4B0D00443D76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200D3EED164C4B0D00443D76 /* UIKit.framework */; };
 		200D3EF0164C4B0D00443D76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200D3EEF164C4B0D00443D76 /* Foundation.framework */; };
 		200D3EF2164C4B0D00443D76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 200D3EF1164C4B0D00443D76 /* CoreGraphics.framework */; };
@@ -22,14 +22,15 @@
 		200D3F0A164C4B0D00443D76 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 200D3F08164C4B0D00443D76 /* FeedViewController.xib */; };
 		200D3F18164C510C00443D76 /* CommonAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F17164C510C00443D76 /* CommonAPI.m */; };
 		200D3F1B164C557600443D76 /* FeedAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F1A164C557600443D76 /* FeedAPI.m */; };
-		20A90D6116511EAE00628502 /* UIPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A90D6016511EAE00628502 /* UIPatternView.m */; };
+		20A90D6116511EAE00628502 /* LazyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A90D6016511EAE00628502 /* LazyImageView.m */; };
+		20BBADBE16525926002BF4BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BBADBC165258AC002BF4BA /* QuartzCore.framework */; };
 		20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C65FE6164E4D2700F9F343 /* UIPattern.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		200D384C1651449D0067FFCD /* UIPatternViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPatternViewController.h; sourceTree = "<group>"; };
-		200D384D1651449D0067FFCD /* UIPatternViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPatternViewController.m; sourceTree = "<group>"; };
 		200D3850165153A40067FFCD /* noimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage.png; sourceTree = "<group>"; };
+		200D385216515A590067FFCD /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		200D385316515A590067FFCD /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		200D3EE9164C4B0D00443D76 /* UIPatterns.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIPatterns.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		200D3EED164C4B0D00443D76 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		200D3EEF164C4B0D00443D76 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,8 +51,9 @@
 		200D3F17164C510C00443D76 /* CommonAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonAPI.m; sourceTree = "<group>"; };
 		200D3F19164C557600443D76 /* FeedAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedAPI.h; sourceTree = "<group>"; };
 		200D3F1A164C557600443D76 /* FeedAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedAPI.m; sourceTree = "<group>"; };
-		20A90D5F16511EAE00628502 /* UIPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPatternView.h; sourceTree = "<group>"; };
-		20A90D6016511EAE00628502 /* UIPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPatternView.m; sourceTree = "<group>"; };
+		20A90D5F16511EAE00628502 /* LazyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LazyImageView.h; sourceTree = "<group>"; };
+		20A90D6016511EAE00628502 /* LazyImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LazyImageView.m; sourceTree = "<group>"; };
+		20BBADBC165258AC002BF4BA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		20C65FE5164E4D2700F9F343 /* UIPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPattern.h; sourceTree = "<group>"; };
 		20C65FE6164E4D2700F9F343 /* UIPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPattern.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,9 +63,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20BBADBE16525926002BF4BA /* QuartzCore.framework in Frameworks */,
+				200D3EF2164C4B0D00443D76 /* CoreGraphics.framework in Frameworks */,
 				200D3EEE164C4B0D00443D76 /* UIKit.framework in Frameworks */,
 				200D3EF0164C4B0D00443D76 /* Foundation.framework in Frameworks */,
-				200D3EF2164C4B0D00443D76 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +76,7 @@
 		200D3EDE164C4B0D00443D76 = {
 			isa = PBXGroup;
 			children = (
+				20BBADBC165258AC002BF4BA /* QuartzCore.framework */,
 				200D3EF3164C4B0D00443D76 /* UIPatterns */,
 				200D3F13164C4CD000443D76 /* Resource */,
 				200D3EEC164C4B0D00443D76 /* Frameworks */,
@@ -107,6 +111,8 @@
 				200D3F10164C4CB100443D76 /* Model */,
 				200D3EFC164C4B0D00443D76 /* AppDelegate.h */,
 				200D3EFD164C4B0D00443D76 /* AppDelegate.m */,
+				200D385216515A590067FFCD /* Util.h */,
+				200D385316515A590067FFCD /* Util.m */,
 				200D3EF4164C4B0D00443D76 /* Supporting Files */,
 			);
 			path = UIPatterns;
@@ -141,8 +147,6 @@
 			children = (
 				200D3F05164C4B0D00443D76 /* FeedViewController.h */,
 				200D3F06164C4B0D00443D76 /* FeedViewController.m */,
-				200D384C1651449D0067FFCD /* UIPatternViewController.h */,
-				200D384D1651449D0067FFCD /* UIPatternViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -150,8 +154,8 @@
 		200D3F12164C4CC700443D76 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				20A90D5F16511EAE00628502 /* UIPatternView.h */,
-				20A90D6016511EAE00628502 /* UIPatternView.m */,
+				20A90D5F16511EAE00628502 /* LazyImageView.h */,
+				20A90D6016511EAE00628502 /* LazyImageView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -257,8 +261,8 @@
 				200D3F18164C510C00443D76 /* CommonAPI.m in Sources */,
 				200D3F1B164C557600443D76 /* FeedAPI.m in Sources */,
 				20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */,
-				20A90D6116511EAE00628502 /* UIPatternView.m in Sources */,
-				200D384E1651449D0067FFCD /* UIPatternViewController.m in Sources */,
+				20A90D6116511EAE00628502 /* LazyImageView.m in Sources */,
+				200D385416515A590067FFCD /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

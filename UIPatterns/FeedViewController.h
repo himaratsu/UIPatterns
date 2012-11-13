@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CommonAPI.h"
 
-#define NUM_OF_PAGES 10
+#define NUM_OF_PAGES 4
 
 @interface FeedViewController : UIViewController<HttpRequestDelegate> {
     UIScrollView* scrollView;

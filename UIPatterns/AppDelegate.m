@@ -18,6 +18,9 @@
     // Override point for customization after application launch.
     self.viewController = [[FeedViewController alloc] initWithNibName:@"ViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
+    
+    [Util hideStatusBar];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

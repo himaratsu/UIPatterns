@@ -9,7 +9,7 @@
 #import "FeedViewController.h"
 #import "FeedAPI.h"
 #import "UIPattern.h"
-#import "UIPatternView.h"
+#import "LazyImageView.h"
 
 @interface FeedViewController ()
 
@@ -27,13 +27,6 @@
     scrollView.showsVerticalScrollIndicator   = YES;
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height * NUM_OF_PAGES);
     [self.view addSubview:scrollView];
-    
-    for (int i=0; i<3; i++) {
-        UIPatternView* uiPatternView = [[UIPatternView alloc] initWithFrame:CGRectMake(330*i + 22, 10, 320, 480)];
-        [self.view addSubview:uiPatternView];
-        
-        [uiPatternList addObject:uiPatternView];
-    }
 }
 
 #pragma mark -
@@ -90,11 +83,17 @@
     
     NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
     
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<9; i++) {
+        int x = i % 3;
+        int y = i / 3;
+        
         UIPattern* pattern = [uiPatterns objectAtIndex:i];
-        UIPatternView* uiPatternView = [uiPatternList objectAtIndex:i];
-        [scrollView addSubview:uiPatternView];
-        uiPatternView.imageUrl = pattern.imageUrl;
+        NSLog(@"imageUrl = %@", pattern.imageUrl);
+        LazyImageView* lazyImageView = [[LazyImageView alloc]
+                                        initWithFrame:CGRectMake(330*x + 22, 490*y + 22, 320, 480)
+                                        withUrl:[NSURL URLWithString:pattern.imageUrl]];
+        [lazyImageView startLoadImage];
+        [scrollView addSubview:lazyImageView];
     }
 }
 
