@@ -29,7 +29,6 @@
 
 @protocol ActionImageViewDelegate <NSObject>
 
-- (void)tapShortImageView:(UIPattern*)uiPattern gesture:(id)gesture;    // タップ
-- (void)tapLongImageView:(UIPattern*)uiPattern gesture:(id)gesture;     // 長押しタップ
+- (void)UIImageViewSingleTap:(UIImage*)image;    // タップ
 
 @end

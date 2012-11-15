@@ -13,7 +13,6 @@
     UIImageView* imageView;
 }
 
-@property (nonatomic, strong) UIPattern* uiPattern;
-@property (nonatomic, weak) NSString* imageUrl;
+@property (nonatomic, weak) UIImage* image;
 
 @end

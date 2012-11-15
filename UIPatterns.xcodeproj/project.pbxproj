@@ -29,6 +29,7 @@
 		20BBADBE16525926002BF4BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BBADBC165258AC002BF4BA /* QuartzCore.framework */; };
 		20BD44D516529DB600BB3829 /* UIPatternThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BD44D416529DB600BB3829 /* UIPatternThumbView.m */; };
 		20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C65FE6164E4D2700F9F343 /* UIPattern.m */; };
+		20F0654B16552969007AE090 /* TouchableUIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F0654A16552969007AE090 /* TouchableUIScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,8 @@
 		20BD44D416529DB600BB3829 /* UIPatternThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPatternThumbView.m; sourceTree = "<group>"; };
 		20C65FE5164E4D2700F9F343 /* UIPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPattern.h; sourceTree = "<group>"; };
 		20C65FE6164E4D2700F9F343 /* UIPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPattern.m; sourceTree = "<group>"; };
+		20F0654916552969007AE090 /* TouchableUIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchableUIScrollView.h; sourceTree = "<group>"; };
+		20F0654A16552969007AE090 /* TouchableUIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchableUIScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +176,8 @@
 				20BA6A871653E3310064728E /* DraggableView.m */,
 				20BA6A8A1653E3580064728E /* TsumamiView.h */,
 				20BA6A8B1653E3580064728E /* TsumamiView.m */,
+				20F0654916552969007AE090 /* TouchableUIScrollView.h */,
+				20F0654A16552969007AE090 /* TouchableUIScrollView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 				20BD44D516529DB600BB3829 /* UIPatternThumbView.m in Sources */,
 				20BA6A881653E3310064728E /* DraggableView.m in Sources */,
 				20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */,
+				20F0654B16552969007AE090 /* TouchableUIScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

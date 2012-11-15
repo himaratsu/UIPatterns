@@ -24,13 +24,12 @@
 
 - (void)_initLayout {
     // 全体のスクロールビュー
-    LOG(@"%f, %f", self.view.bounds.size.width, self.view.bounds.size.height);
-    scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    LOG(@"%f, %f", scrollView.bounds.size.width, scrollView.bounds.size.height);
+    scrollView = [[TouchableUIScrollView alloc] initWithFrame:self.view.bounds];
     scrollView.backgroundColor = kDefaultBgColor;
     scrollView.showsHorizontalScrollIndicator = YES;
     scrollView.showsVerticalScrollIndicator   = YES;
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
+    scrollView.delegate = self;
     [self.view addSubview:scrollView];
     
     // 画面上部の青色ライン
@@ -195,66 +194,57 @@
 }
 
 #pragma mark -
+#pragma mark TouchableUIScrollDelegate
+
+- (void)scrollViewTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    LOG_CURRENT_METHOD;
+
+    
+    CGPoint point = [[touches anyObject] locationInView:scrollView];
+    startLocation = currentLocation = point;
+    [self appearThumbViewWithAnimation:currentLocation];
+    [scrollView bringSubviewToFront:thumbView];
+}
+
+- (void)scrollViewTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    LOG_CURRENT_METHOD;
+    
+    CGPoint pt = [[touches anyObject] locationInView:scrollView];
+    LOG(@"start = %f, current = %f", startLocation.x, pt.x);
+    CGRect frame = [thumbView frame];
+    frame.origin.x += pt.x - currentLocation.x;
+    frame.origin.y += pt.y - currentLocation.y;
+    [thumbView setFrame:frame];
+    
+    currentLocation = CGPointMake(frame.origin.x + frame.size.width/2,
+                                frame.origin.y + frame.size.height/2);
+}
+
+- (void)scrollViewTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    LOG_CURRENT_METHOD;
+    thumbView.hidden = YES;
+}
+
+
+#pragma mark -
 #pragma mark ActionImageViewDelegate
 
-//// 通常タップ
-//- (void)tapShortImageView:(UIPattern *)uiPattern gesture:(id)gesture {
-//    LOG_CURRENT_METHOD;
-//
-//}
-//
-//// 長押しタップ
-//- (void)tapLongImageView:(UIPattern *)uiPattern gesture:(id)gesture {
-//    LOG_CURRENT_METHOD;
-//    UILongPressGestureRecognizer* tapGesture = (UILongPressGestureRecognizer*)gesture;
-//    CGPoint point = [tapGesture locationInView:scrollView];
-//    LOG(@"%f, %f", point.x, point.y);
-//    
-//    thumbView.uiPattern = uiPattern;
-//    thumbView.frame = CGRectMake(point.x - (kThumbnailSizeWidth+10)/2,
-//                                 point.y - (kThumbnailSizeHeight+10)/2,
-//                                 kThumbnailSizeWidth + 10,
-//                                 kThumbnailSizeHeight + 10);
-//    thumbView.hidden = NO;
-//    [scrollView bringSubviewToFront:thumbView];
-//    
-//    // タッチイベント呼ぶ
-//    [self touchesBegan:nil withEvent:nil];
-//    [self setDragAndDropMode:YES];
-//}
+// 通常タップ
+- (void)UIImageViewSingleTap:(UIImage *)image {
+    thumbView.image = image;
+}
 
+#pragma mark -
+#pragma mark Animation
 
-//#pragma mark -
-//#pragma mark TouchEvent
-//
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    LOG(@"touchesBegan");
-//    startLocation = thumbView.frame.origin;
-//}
-//
-//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-//    LOG(@"touchesMoved");
-//    CGPoint pt = [[touches anyObject] locationInView:scrollView];
-//    LOG(@"start = %f, current = %f", startLocation.x, pt.x);
-//    CGRect frame = [thumbView frame];
-//    frame.origin.x += pt.x - startLocation.x;
-//    frame.origin.y += pt.y - startLocation.y;
-//    [thumbView setFrame:frame];
-//}
-//
-//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-//    LOG(@"touchesEnded");
-//    thumbView.hidden = YES;
-//    [self setDragAndDropMode:NO];
-//}
-//
-//
-//// D&D中はYES
-//- (void)setDragAndDropMode:(BOOL)mode {
-//    scrollView.delaysContentTouches = !mode;
-//    scrollView.userInteractionEnabled = !mode;
-//    highliteBackView.hidden = !mode;
-//}
+- (void)appearThumbViewWithAnimation:(CGPoint)point {
+    thumbView.frame = CGRectMake(point.x - (kThumbnailSizeWidth+10)/2,
+                                 point.y - (kThumbnailSizeHeight+10)/2,
+                                 kThumbnailSizeWidth + 10,
+                                 kThumbnailSizeHeight + 10);
+    thumbView.hidden = NO;
+}
+
 
 - (void)reloadButtonTouchUpInside:(id)sender {
     [self reload];

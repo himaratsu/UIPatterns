@@ -40,16 +40,6 @@ typedef enum LazyImageViewTag_ {
         
         // 画像URLをセット
         [self setImageUrl:url];
-        
-        // イベントを追加
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]
-                                              initWithTarget:self
-                                              action:@selector(tapShortImageView:)];
-        [self addGestureRecognizer:tapGesture];
-        UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc]
-                                                          initWithTarget:self
-                                                          action:@selector(tapLongImageView:)];
-        [self addGestureRecognizer:longPressGesture];
     }
     
     return self;
@@ -143,17 +133,15 @@ typedef enum LazyImageViewTag_ {
 @synthesize delegate = delegate_;
 
 
-- (void)tapShortImageView:(id)sender {
-    if ([delegate_ respondsToSelector:@selector(tapShortImageView:gesture:)]) {
-        UITapGestureRecognizer* tapGesture = (UITapGestureRecognizer*)sender;
-        [delegate_ tapShortImageView:uiPattern_ gesture:tapGesture];
-    }
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    // 別スレッドで処理を続行
+    [NSThread detachNewThreadSelector:@selector(touchImageView) toTarget:self withObject:nil];
+    [super touchesBegan:touches withEvent:event];
 }
 
-- (void)tapLongImageView:(id)sender {
-    if ([delegate_ respondsToSelector:@selector(tapLongImageView:gesture:)]) {
-        UILongPressGestureRecognizer* longPressGesture = (UILongPressGestureRecognizer*)sender;
-        [delegate_ tapLongImageView:uiPattern_ gesture:longPressGesture];
+- (void)touchImageView {
+    if ([delegate_ respondsToSelector:@selector(UIImageViewSingleTap:)]) {
+        [delegate_ UIImageViewSingleTap:self.image];
     }
 }
 

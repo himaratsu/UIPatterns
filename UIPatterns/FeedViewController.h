@@ -10,15 +10,20 @@
 #import "CommonAPI.h"
 #import "LazyImageView.h"
 #import "UIPatternThumbView.h"
+#import "TouchableUIScrollView.h"
 
 #define NUM_OF_PAGES 4
 
-@interface FeedViewController : UIViewController<HttpRequestDelegate, ActionImageViewDelegate> {
+@interface FeedViewController : UIViewController
+<HttpRequestDelegate,
+ActionImageViewDelegate,
+TouchableUIScrollDelegate> {
     UIScrollView* scrollView;
     UIView* highliteBackView;
     
     UIPatternThumbView* thumbView;
     CGPoint startLocation;
+    CGPoint currentLocation;
 }
 
 @end

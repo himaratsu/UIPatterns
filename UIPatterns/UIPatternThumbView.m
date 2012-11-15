@@ -12,8 +12,7 @@
 
 @implementation UIPatternThumbView
 
-@synthesize uiPattern = uiPattern_;
-@synthesize imageUrl = imageUrl_;
+@synthesize image = image_;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -35,31 +34,9 @@
     return self;
 }
 
-- (void)setUiPattern:(UIPattern *)uiPattern {
-    [self setImageUrl:uiPattern.imageUrl];
-    uiPattern_ = uiPattern;
-}
-
-- (void)setImageUrl:(NSString *)imageUrl {
-    NSURL* url = [NSURL URLWithString:imageUrl];
-    NSData* data = [NSData dataWithContentsOfURL:url];
-    UIImage* img = [[UIImage alloc] initWithData:data];
-    imageView.image = img;
-}
-
-#pragma mark -
-#pragma mark TouchEvent
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG(@"********************");
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG(@"####################");
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG(@"####################");
+- (void)setImage:(UIImage*)image{
+    image_ = image;
+    imageView.image = image;
 }
 
 @end
