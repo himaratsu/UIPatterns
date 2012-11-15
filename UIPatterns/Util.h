@@ -18,6 +18,20 @@
 
 #define kDefaultBgColor     [UIColor colorWithRed:248/255.0 green:248/255.0 blue:248/255.0 alpha:1.0]
 #define kDefaultAccentColor [UIColor colorWithRed:63/255.0 green:169/255.0 blue:245/255.0 alpha:1.0]
+#define kDefaultSubColor    [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0]
+
+#define kUIPatternImageSizeWidth  320
+#define kUIPatternImageSizeHeight 480
+#define kThumbnailSizeWidth  100
+#define kThumbnailSizeHeight 150
+#define kTsumamiSizeWidth 50
+#define kTsumamiSizeHeight 50
+
+#define kMarginLeft 30
+
+#define numberOfUIPatternInRow 3    // 一行に何枚表示するか
+
+#define kUIImageTag 100
 
 @interface Util : NSObject
 

@@ -10,7 +10,8 @@
 #import "FeedViewController.h"
 #import "FeedAPI.h"
 #import "UIPattern.h"
-#import "LazyImageView.h"
+#import "DraggableView.h"
+
 
 @interface FeedViewController ()
 
@@ -23,11 +24,13 @@
 
 - (void)_initLayout {
     // 全体のスクロールビュー
+    LOG(@"%f, %f", self.view.bounds.size.width, self.view.bounds.size.height);
     scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    LOG(@"%f, %f", scrollView.bounds.size.width, scrollView.bounds.size.height);
     scrollView.backgroundColor = kDefaultBgColor;
     scrollView.showsHorizontalScrollIndicator = YES;
     scrollView.showsVerticalScrollIndicator   = YES;
-    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height * NUM_OF_PAGES);
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
     [self.view addSubview:scrollView];
     
     // 画面上部の青色ライン
@@ -64,11 +67,43 @@
     searchField.font = [UIFont fontWithName:@"Verdana" size:26.0f];
     searchField.textColor = [UIColor grayColor];
     [scrollView addSubview:searchField];
-
+    
+    // 画像ドラッグ時の背景ビュー
+    highliteBackView = [[UIView alloc] initWithFrame:self.view.frame];
+    highliteBackView.backgroundColor = [UIColor whiteColor];
+    highliteBackView.alpha = 0.4;
+    highliteBackView.hidden = YES;
+    [self.view addSubview:highliteBackView];
+    
+    // ドラッグ時要のサムネイルビュー
+    thumbView = [[UIPatternThumbView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [scrollView addSubview:thumbView];
+    
+    // 右側のコレクションビュー
+    DraggableView* ridhtCollectionView = [[DraggableView alloc]
+                                          initWithFrame:CGRectMake(1024-200, 50, 200, 700)];
+    [self.view addSubview:ridhtCollectionView];
+    
+    
+    // temp更新ボタン
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [btn setTitle:@"更新" forState:UIControlStateNormal];
+    btn.frame = CGRectMake(650, 53, 35, 35);
+    [btn addTarget:self action:@selector(reloadButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:btn];
 }
 
+- (void)resetUIPatternLayout {
+    for (UIView* v in [scrollView subviews]) {
+        if (v.tag == kUIImageTag) {
+            [v removeFromSuperview];
+        }
+    }
+}
+
+// UIPattern画像を再読み込み
 - (void)reload {
-    [self _initLayout];
+    [self resetUIPatternLayout];
     FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
     [feedAPI send];
 }
@@ -79,14 +114,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self _initLayout];
     [self reload];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     scrollView.frame = self.view.bounds;
-    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height * NUM_OF_PAGES);
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
 }
 
 - (void)didReceiveMemoryWarning
@@ -128,17 +163,26 @@
     NSLog(@"通信成功");
     NSDictionary* result = (NSDictionary*)sender;
     
-    NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
+    int total = [[result objectForKey:@"totalCount"] intValue];
     
-    for (int i=0; i<9; i++) {
-        int x = i % 3;
-        int y = i / 3;
+    // 描画領域を確保
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width,
+                                        120+kUIPatternImageSizeHeight*(total/numberOfUIPatternInRow)
+                                        );
+    
+    NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
+    for (int i=0; i<total; i++) {
+        int x = i % numberOfUIPatternInRow;
+        int y = i / numberOfUIPatternInRow;
         
         UIPattern* pattern = [uiPatterns objectAtIndex:i];
-        NSLog(@"imageUrl = %@", pattern.imageUrl);
         LazyImageView* lazyImageView = [[LazyImageView alloc]
-                                        initWithFrame:CGRectMake(330*x + 30, 490*y + 120, 300, 450)
+                                        initWithFrame:CGRectMake((kUIPatternImageSizeWidth+10)*x + kMarginLeft,
+                                                                 (kUIPatternImageSizeHeight+10)*y + 120,
+                                                                 kUIPatternImageSizeWidth - 20,
+                                                                 kUIPatternImageSizeHeight - 30)
                                         withUrl:[NSURL URLWithString:pattern.imageUrl]];
+        lazyImageView.tag = kUIImageTag;
         lazyImageView.delegate = self;
         lazyImageView.uiPattern = pattern;
         [lazyImageView startLoadImage];
@@ -153,16 +197,67 @@
 #pragma mark -
 #pragma mark ActionImageViewDelegate
 
-- (void)touchesBeganWithUIPattern:(UIPattern *)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"uiPattern = %@", uiPattern.title);
-}
+//// 通常タップ
+//- (void)tapShortImageView:(UIPattern *)uiPattern gesture:(id)gesture {
+//    LOG_CURRENT_METHOD;
+//
+//}
+//
+//// 長押しタップ
+//- (void)tapLongImageView:(UIPattern *)uiPattern gesture:(id)gesture {
+//    LOG_CURRENT_METHOD;
+//    UILongPressGestureRecognizer* tapGesture = (UILongPressGestureRecognizer*)gesture;
+//    CGPoint point = [tapGesture locationInView:scrollView];
+//    LOG(@"%f, %f", point.x, point.y);
+//    
+//    thumbView.uiPattern = uiPattern;
+//    thumbView.frame = CGRectMake(point.x - (kThumbnailSizeWidth+10)/2,
+//                                 point.y - (kThumbnailSizeHeight+10)/2,
+//                                 kThumbnailSizeWidth + 10,
+//                                 kThumbnailSizeHeight + 10);
+//    thumbView.hidden = NO;
+//    [scrollView bringSubviewToFront:thumbView];
+//    
+//    // タッチイベント呼ぶ
+//    [self touchesBegan:nil withEvent:nil];
+//    [self setDragAndDropMode:YES];
+//}
 
-- (void)touchesMovedWithUIPattern:(UIPattern *)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"uiPattern = %@", uiPattern.title);
-}
 
-- (void)touchesEndWithUIPattern:(UIPattern *)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"uiPattern = %@", uiPattern.title);
+//#pragma mark -
+//#pragma mark TouchEvent
+//
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+//    LOG(@"touchesBegan");
+//    startLocation = thumbView.frame.origin;
+//}
+//
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+//    LOG(@"touchesMoved");
+//    CGPoint pt = [[touches anyObject] locationInView:scrollView];
+//    LOG(@"start = %f, current = %f", startLocation.x, pt.x);
+//    CGRect frame = [thumbView frame];
+//    frame.origin.x += pt.x - startLocation.x;
+//    frame.origin.y += pt.y - startLocation.y;
+//    [thumbView setFrame:frame];
+//}
+//
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+//    LOG(@"touchesEnded");
+//    thumbView.hidden = YES;
+//    [self setDragAndDropMode:NO];
+//}
+//
+//
+//// D&D中はYES
+//- (void)setDragAndDropMode:(BOOL)mode {
+//    scrollView.delaysContentTouches = !mode;
+//    scrollView.userInteractionEnabled = !mode;
+//    highliteBackView.hidden = !mode;
+//}
+
+- (void)reloadButtonTouchUpInside:(id)sender {
+    [self reload];
 }
 
 @end

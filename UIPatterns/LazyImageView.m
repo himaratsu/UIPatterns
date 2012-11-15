@@ -9,6 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "LazyImageView.h"
 
+#define LONG_PRESS_DELAY 0.5
+
 typedef enum LazyImageViewTag_ {
     LazyImageViewTagIndicatorView = 1,
 } LazyImageViewTag;
@@ -38,6 +40,16 @@ typedef enum LazyImageViewTag_ {
         
         // 画像URLをセット
         [self setImageUrl:url];
+        
+        // イベントを追加
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]
+                                              initWithTarget:self
+                                              action:@selector(tapShortImageView:)];
+        [self addGestureRecognizer:tapGesture];
+        UILongPressGestureRecognizer* longPressGesture = [[UILongPressGestureRecognizer alloc]
+                                                          initWithTarget:self
+                                                          action:@selector(tapLongImageView:)];
+        [self addGestureRecognizer:longPressGesture];
     }
     
     return self;
@@ -130,20 +142,20 @@ typedef enum LazyImageViewTag_ {
 @synthesize uiPattern = uiPattern_;
 @synthesize delegate = delegate_;
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG_CURRENT_METHOD;
-    [delegate_ touchesBeganWithUIPattern:uiPattern_
-     touches:touches withEvent:event];
+
+- (void)tapShortImageView:(id)sender {
+    if ([delegate_ respondsToSelector:@selector(tapShortImageView:gesture:)]) {
+        UITapGestureRecognizer* tapGesture = (UITapGestureRecognizer*)sender;
+        [delegate_ tapShortImageView:uiPattern_ gesture:tapGesture];
+    }
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [delegate_ touchesMovedWithUIPattern:uiPattern_
-     touches:touches withEvent:event];
+- (void)tapLongImageView:(id)sender {
+    if ([delegate_ respondsToSelector:@selector(tapLongImageView:gesture:)]) {
+        UILongPressGestureRecognizer* longPressGesture = (UILongPressGestureRecognizer*)sender;
+        [delegate_ tapLongImageView:uiPattern_ gesture:longPressGesture];
+    }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [delegate_ touchesEndWithUIPattern:uiPattern_
-     touches:touches withEvent:event];
-}
 
 @end

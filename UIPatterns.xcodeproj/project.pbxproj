@@ -24,7 +24,10 @@
 		200D3F1B164C557600443D76 /* FeedAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F1A164C557600443D76 /* FeedAPI.m */; };
 		203C9CEC16526CF300C9DFE8 /* search_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 203C9CEB16526CF300C9DFE8 /* search_icon.png */; };
 		20A90D6116511EAE00628502 /* LazyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A90D6016511EAE00628502 /* LazyImageView.m */; };
+		20BA6A881653E3310064728E /* DraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A871653E3310064728E /* DraggableView.m */; };
+		20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A8B1653E3580064728E /* TsumamiView.m */; };
 		20BBADBE16525926002BF4BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BBADBC165258AC002BF4BA /* QuartzCore.framework */; };
+		20BD44D516529DB600BB3829 /* UIPatternThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BD44D416529DB600BB3829 /* UIPatternThumbView.m */; };
 		20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C65FE6164E4D2700F9F343 /* UIPattern.m */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +58,13 @@
 		203C9CEB16526CF300C9DFE8 /* search_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_icon.png; sourceTree = "<group>"; };
 		20A90D5F16511EAE00628502 /* LazyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LazyImageView.h; sourceTree = "<group>"; };
 		20A90D6016511EAE00628502 /* LazyImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LazyImageView.m; sourceTree = "<group>"; };
+		20BA6A861653E3310064728E /* DraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableView.h; sourceTree = "<group>"; };
+		20BA6A871653E3310064728E /* DraggableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableView.m; sourceTree = "<group>"; };
+		20BA6A8A1653E3580064728E /* TsumamiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TsumamiView.h; sourceTree = "<group>"; };
+		20BA6A8B1653E3580064728E /* TsumamiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TsumamiView.m; sourceTree = "<group>"; };
 		20BBADBC165258AC002BF4BA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		20BD44D316529DB600BB3829 /* UIPatternThumbView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPatternThumbView.h; sourceTree = "<group>"; };
+		20BD44D416529DB600BB3829 /* UIPatternThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPatternThumbView.m; sourceTree = "<group>"; };
 		20C65FE5164E4D2700F9F343 /* UIPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPattern.h; sourceTree = "<group>"; };
 		20C65FE6164E4D2700F9F343 /* UIPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPattern.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +167,12 @@
 			children = (
 				20A90D5F16511EAE00628502 /* LazyImageView.h */,
 				20A90D6016511EAE00628502 /* LazyImageView.m */,
+				20BD44D316529DB600BB3829 /* UIPatternThumbView.h */,
+				20BD44D416529DB600BB3829 /* UIPatternThumbView.m */,
+				20BA6A861653E3310064728E /* DraggableView.h */,
+				20BA6A871653E3310064728E /* DraggableView.m */,
+				20BA6A8A1653E3580064728E /* TsumamiView.h */,
+				20BA6A8B1653E3580064728E /* TsumamiView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -267,6 +282,9 @@
 				20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */,
 				20A90D6116511EAE00628502 /* LazyImageView.m in Sources */,
 				200D385416515A590067FFCD /* Util.m in Sources */,
+				20BD44D516529DB600BB3829 /* UIPatternThumbView.m in Sources */,
+				20BA6A881653E3310064728E /* DraggableView.m in Sources */,
+				20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

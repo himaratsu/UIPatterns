@@ -11,7 +11,9 @@
 
 @protocol ActionImageViewDelegate;
 
-@interface LazyImageView : UIImageView
+@interface LazyImageView : UIImageView {
+    BOOL isPress;
+}
 
 - (id)initWithFrame:(CGRect)frame withUrl:(NSURL *)url;
 
@@ -27,8 +29,7 @@
 
 @protocol ActionImageViewDelegate <NSObject>
 
-- (void)touchesBeganWithUIPattern:(UIPattern*)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesMovedWithUIPattern:(UIPattern*)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesEndWithUIPattern:(UIPattern*)uiPattern touches:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)tapShortImageView:(UIPattern*)uiPattern gesture:(id)gesture;    // タップ
+- (void)tapLongImageView:(UIPattern*)uiPattern gesture:(id)gesture;     // 長押しタップ
 
 @end
