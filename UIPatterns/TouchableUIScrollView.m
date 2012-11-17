@@ -10,7 +10,7 @@
 
 @implementation TouchableUIScrollView
 
-@synthesize delegate;
+@synthesize myDelegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -28,16 +28,16 @@
     LOG(@"customTouchesBegan");
     self.scrollEnabled = NO;
     [self.nextResponder touchesBegan:touches withEvent:event];
-    if ([delegate respondsToSelector:@selector(scrollViewTouchesBegan:withEvent:)]) {
-        [delegate scrollViewTouchesBegan:touches withEvent:event];
+    if ([myDelegate respondsToSelector:@selector(scrollViewTouchesBegan:withEvent:)]) {
+        [myDelegate scrollViewTouchesBegan:touches withEvent:event];
     }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     LOG(@"customTouchesMoved");
     [self.nextResponder touchesMoved:touches withEvent:event];
-    if ([delegate respondsToSelector:@selector(scrollViewTouchesMoved:withEvent:)]) {
-        [delegate scrollViewTouchesMoved:touches withEvent:event];
+    if ([myDelegate respondsToSelector:@selector(scrollViewTouchesMoved:withEvent:)]) {
+        [myDelegate scrollViewTouchesMoved:touches withEvent:event];
     }
 }
 
@@ -45,8 +45,8 @@
     LOG(@"customTouchesEnded");
     self.scrollEnabled = YES;
     [self.nextResponder touchesEnded:touches withEvent:event];
-    if ([delegate respondsToSelector:@selector(scrollViewTouchesEnded:withEvent:)]) {
-        [delegate scrollViewTouchesEnded:touches withEvent:event];
+    if ([myDelegate respondsToSelector:@selector(scrollViewTouchesEnded:withEvent:)]) {
+        [myDelegate scrollViewTouchesEnded:touches withEvent:event];
     }
 }
 

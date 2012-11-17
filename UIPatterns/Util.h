@@ -20,12 +20,12 @@
 #define kDefaultAccentColor [UIColor colorWithRed:63/255.0 green:169/255.0 blue:245/255.0 alpha:1.0]
 #define kDefaultSubColor    [UIColor colorWithRed:242/255.0 green:242/255.0 blue:242/255.0 alpha:1.0]
 
-#define kUIPatternImageSizeWidth  320
-#define kUIPatternImageSizeHeight 480
-#define kThumbnailSizeWidth  100
-#define kThumbnailSizeHeight 150
-#define kTsumamiSizeWidth 50
-#define kTsumamiSizeHeight 50
+#define kUIPatternImageSizeWidth  320   // UIPattern画像の幅
+#define kUIPatternImageSizeHeight 480   // UIPattern画像の高さ
+#define kThumbnailSizeWidth  100        // UIPatternサムネイルの幅
+#define kThumbnailSizeHeight 150        // UIPatternサムネイルの高さ
+
+#define kPullUpdateViewHeight 50        // 「引っ張って更新」のビューの高さ
 
 #define kMarginLeft 30
 

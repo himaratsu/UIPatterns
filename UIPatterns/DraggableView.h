@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "TsumamiView.h"
 
-#define kMenuBarMoveRange 150
+#define kMenuBarMoveRange 150           // バーの移動幅
+#define kTsumamiSizeWidth 50            // サイドバーのつまみの幅
+#define kTsumamiSizeHeight 50           // サイドバーのつまみの高さ
 
 @interface DraggableView : UIView <TsumamiViewTouchActionDelegate> {
     CGPoint startLocation;

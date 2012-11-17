@@ -139,6 +139,12 @@ typedef enum LazyImageViewTag_ {
     [super touchesBegan:touches withEvent:event];
 }
 
+- (void)touchLongImageView:(id)sender {
+    if ([delegate_ respondsToSelector:@selector(UIImageViewLongTap:)]) {
+        [delegate_ UIImageViewLongTap:self.image];
+    }
+}
+
 - (void)touchImageView {
     if ([delegate_ respondsToSelector:@selector(UIImageViewSingleTap:)]) {
         [delegate_ UIImageViewSingleTap:self.image];

@@ -12,7 +12,7 @@
 
 @interface TouchableUIScrollView : UIScrollView
 
-@property (weak) id<TouchableUIScrollDelegate> delegate;
+@property (weak) id<TouchableUIScrollDelegate> myDelegate;
 @end
 
 @protocol TouchableUIScrollDelegate <NSObject>

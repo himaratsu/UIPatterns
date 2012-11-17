@@ -12,18 +12,21 @@
 #import "UIPatternThumbView.h"
 #import "TouchableUIScrollView.h"
 #import "DraggableView.h"
+#import "PullUpdateView.h"
 
 #define NUM_OF_PAGES 4
 
-@interface FeedViewController : UIViewController
+@interface FeedViewController : UIViewController 
 <HttpRequestDelegate,
 ActionImageViewDelegate,
-TouchableUIScrollDelegate> {
-    UIScrollView* scrollView;
+TouchableUIScrollDelegate,
+UIScrollViewDelegate> {
+    TouchableUIScrollView* scrollView;
     UIView* highliteBackView;
     
     DraggableView* ridhtCollectionView;
     UIPatternThumbView* thumbView;
+    PullUpdateView *pullView;
     CGPoint startLocation;
     CGPoint currentLocation;
 }

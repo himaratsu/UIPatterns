@@ -29,6 +29,7 @@
 
 @protocol ActionImageViewDelegate <NSObject>
 
-- (void)UIImageViewSingleTap:(UIImage*)image;    // タップ
+- (void)UIImageViewSingleTap:(UIImage*)image;   // タップ
+- (void)UIImageViewLongTap:(UIImage*)image;     // 長押しタップ
 
 @end

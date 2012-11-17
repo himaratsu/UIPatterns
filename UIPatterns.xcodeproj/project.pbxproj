@@ -23,6 +23,7 @@
 		200D3F18164C510C00443D76 /* CommonAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F17164C510C00443D76 /* CommonAPI.m */; };
 		200D3F1B164C557600443D76 /* FeedAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F1A164C557600443D76 /* FeedAPI.m */; };
 		203C9CEC16526CF300C9DFE8 /* search_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 203C9CEB16526CF300C9DFE8 /* search_icon.png */; };
+		20947182165764F2002550EE /* PullUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20947181165764F2002550EE /* PullUpdateView.m */; };
 		20A90D6116511EAE00628502 /* LazyImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A90D6016511EAE00628502 /* LazyImageView.m */; };
 		20BA6A881653E3310064728E /* DraggableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A871653E3310064728E /* DraggableView.m */; };
 		20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A8B1653E3580064728E /* TsumamiView.m */; };
@@ -57,6 +58,8 @@
 		200D3F19164C557600443D76 /* FeedAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedAPI.h; sourceTree = "<group>"; };
 		200D3F1A164C557600443D76 /* FeedAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedAPI.m; sourceTree = "<group>"; };
 		203C9CEB16526CF300C9DFE8 /* search_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_icon.png; sourceTree = "<group>"; };
+		20947180165764F2002550EE /* PullUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullUpdateView.h; sourceTree = "<group>"; };
+		20947181165764F2002550EE /* PullUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullUpdateView.m; sourceTree = "<group>"; };
 		20A90D5F16511EAE00628502 /* LazyImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LazyImageView.h; sourceTree = "<group>"; };
 		20A90D6016511EAE00628502 /* LazyImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LazyImageView.m; sourceTree = "<group>"; };
 		20BA6A861653E3310064728E /* DraggableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableView.h; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 				20BA6A8B1653E3580064728E /* TsumamiView.m */,
 				20F0654916552969007AE090 /* TouchableUIScrollView.h */,
 				20F0654A16552969007AE090 /* TouchableUIScrollView.m */,
+				20947180165764F2002550EE /* PullUpdateView.h */,
+				20947181165764F2002550EE /* PullUpdateView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 				20BA6A881653E3310064728E /* DraggableView.m in Sources */,
 				20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */,
 				20F0654B16552969007AE090 /* TouchableUIScrollView.m in Sources */,
+				20947182165764F2002550EE /* PullUpdateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

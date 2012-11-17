@@ -11,7 +11,6 @@
 #import "FeedAPI.h"
 #import "UIPattern.h"
 
-
 @interface FeedViewController ()
 
 @end
@@ -29,7 +28,13 @@
     scrollView.showsVerticalScrollIndicator   = YES;
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
     scrollView.delegate = self;
+    scrollView.myDelegate = self;
     [self.view addSubview:scrollView];
+    
+    // 「引っ張って更新」のビュー
+    pullView = [[PullUpdateView alloc] initWithFrame:CGRectMake(0, -kPullUpdateViewHeight, 2048, kPullUpdateViewHeight)];
+    [scrollView addSubview:pullView];
+    
     
     // 画面上部の青色ライン
     UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2048, 15)];
@@ -82,14 +87,6 @@
                                           initWithFrame:CGRectMake(1024-195, 50, 200, 700)];
     [ridhtCollectionView moveToPositionBWithAnimation:NO];  // 最初は隠す
     [self.view addSubview:ridhtCollectionView];
-    
-    
-    // temp更新ボタン
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btn setTitle:@"更新" forState:UIControlStateNormal];
-    btn.frame = CGRectMake(650, 53, 35, 35);
-    [btn addTarget:self action:@selector(reloadButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:btn];
 }
 
 - (void)resetUIPatternLayout {
@@ -206,18 +203,12 @@
 #pragma mark TouchableUIScrollDelegate
 
 - (void)scrollViewTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG_CURRENT_METHOD;
-
-    
     CGPoint point = [[touches anyObject] locationInView:self.view];
-//    currentLocation = point;
     currentLocation = startLocation = point;
     [self appearThumbViewWithAnimation:currentLocation];
 }
 
 - (void)scrollViewTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG_CURRENT_METHOD;
-    
     CGPoint pt = [[touches anyObject] locationInView:self.view];
     CGRect frame = [thumbView frame];
     frame.origin.x += pt.x - currentLocation.x;
@@ -229,11 +220,8 @@
 }
 
 - (void)scrollViewTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG_CURRENT_METHOD;
     [self disappearThumbViewWithAnimation];
-
 }
-
 
 #pragma mark -
 #pragma mark ActionImageViewDelegate
@@ -283,10 +271,26 @@
 }
 
 #pragma mark -
-#pragma mark UserAction
+#pragma mark UIScrollViewDelegate
 
-- (void)reloadButtonTouchUpInside:(id)sender {
-    [self reload];
+// ドラッグ中
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    LOG(@"x, y = %f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
+    // スクロール量によって文言かえる
+    CGFloat y = scrollView.contentOffset.y;
+    if (y < -50) {
+        pullView.label.text = @"このまま指を離して更新！";
+    } else {
+        pullView.label.text = @"引っ張って更新";
+    }
 }
 
+// ドラッグ終了
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    CGFloat y = scrollView.contentOffset.y;
+    if (y < -50) {
+        [self reload];
+    }
+    pullView.label.text = @"引っ張って更新";
+}
 @end
