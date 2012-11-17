@@ -86,16 +86,16 @@
     // 移動してなければposA<->posBに移動
     if (isTouchesMove == NO) {
         if (isCurrentPosA) {
-            [self moveToPositionBWithAnimation];
+            [self moveToPositionBWithAnimation:YES];
         } else {
-            [self moveToPositionAWithAnimation];
+            [self moveToPositionAWithAnimation:YES];
         }
     } else {
         // 移動した場合、posAとposBの近い方に移動
         if (self.frame.origin.x <= borderHalf) {
-            [self moveToPositionAWithAnimation];
+            [self moveToPositionAWithAnimation:YES];
         } else {
-            [self moveToPositionBWithAnimation];
+            [self moveToPositionBWithAnimation:YES];
         }
     }
 }
@@ -120,25 +120,35 @@
 #pragma mark -
 #pragma mark MoveAnimation
 
-- (void)moveToPositionAWithAnimation {
-    [UIView animateWithDuration:0.5f
-                     animations:^(void){
-                         self.frame = posA;
-                     }
-                     completion:^(BOOL finished) {
-                         isCurrentPosA = YES;
-                     }];
+- (void)moveToPositionAWithAnimation:(BOOL)animated {
+    if (animated) {
+        [UIView animateWithDuration:0.3f
+                         animations:^(void){
+                             self.frame = posA;
+                         }
+                         completion:^(BOOL finished) {
+                             isCurrentPosA = YES;
+                         }];
+    } else {
+        self.frame = posA;
+        isCurrentPosA = YES;
+    }
 }
 
 
-- (void)moveToPositionBWithAnimation {
-    [UIView animateWithDuration:0.5f
-                     animations:^(void){
-                         self.frame = posB;
-                     }
-                     completion:^(BOOL finished) {
-                         isCurrentPosA = NO;
-                     }];
+- (void)moveToPositionBWithAnimation:(BOOL)animated {
+    if (animated) {
+        [UIView animateWithDuration:0.3f
+                         animations:^(void){
+                             self.frame = posB;
+                         }
+                         completion:^(BOOL finished) {
+                             isCurrentPosA = NO;
+                         }];
+    } else {
+        self.frame = posB;
+        isCurrentPosA = NO;
+    }
 }
 
 @end

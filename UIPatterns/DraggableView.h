@@ -20,4 +20,7 @@
     CGFloat borderHalf, borderLeft, borderRight;
 }
 
+- (void)moveToPositionAWithAnimation:(BOOL)animated;
+- (void)moveToPositionBWithAnimation:(BOOL)animated;
+
 @end

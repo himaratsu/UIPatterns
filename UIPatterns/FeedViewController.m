@@ -10,7 +10,6 @@
 #import "FeedViewController.h"
 #import "FeedAPI.h"
 #import "UIPattern.h"
-#import "DraggableView.h"
 
 
 @interface FeedViewController ()
@@ -68,19 +67,20 @@
     [scrollView addSubview:searchField];
     
     // 画像ドラッグ時の背景ビュー
-    highliteBackView = [[UIView alloc] initWithFrame:self.view.frame];
-    highliteBackView.backgroundColor = [UIColor whiteColor];
-    highliteBackView.alpha = 0.4;
+    highliteBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768*3)];
+    highliteBackView.backgroundColor = [UIColor blackColor];
+    highliteBackView.alpha = 0.2;
     highliteBackView.hidden = YES;
-    [self.view addSubview:highliteBackView];
+    [scrollView addSubview:highliteBackView];
     
     // ドラッグ時要のサムネイルビュー
     thumbView = [[UIPatternThumbView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    [scrollView addSubview:thumbView];
+    [self.view addSubview:thumbView];
     
     // 右側のコレクションビュー
-    DraggableView* ridhtCollectionView = [[DraggableView alloc]
-                                          initWithFrame:CGRectMake(1024-200, 50, 200, 700)];
+    ridhtCollectionView = [[DraggableView alloc]
+                                          initWithFrame:CGRectMake(1024-195, 50, 200, 700)];
+    [ridhtCollectionView moveToPositionBWithAnimation:NO];  // 最初は隠す
     [self.view addSubview:ridhtCollectionView];
     
     
@@ -187,10 +187,19 @@
         [lazyImageView startLoadImage];
         [scrollView addSubview:lazyImageView];
     }
+    
+    // D&D時の背景ビューを、前面に持ってきておく
+    [scrollView bringSubviewToFront:highliteBackView];
 }
 
 - (void)didErrorHttpRequest:(id)sender {
     NSLog(@"通信エラー");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
+                                                    message:@"エラーが発生しました。\nネットワーク環境のあるところで再読み込みして下さい。"
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    [alert show];
 }
 
 #pragma mark -
@@ -200,17 +209,16 @@
     LOG_CURRENT_METHOD;
 
     
-    CGPoint point = [[touches anyObject] locationInView:scrollView];
-    startLocation = currentLocation = point;
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+//    currentLocation = point;
+    currentLocation = startLocation = point;
     [self appearThumbViewWithAnimation:currentLocation];
-    [scrollView bringSubviewToFront:thumbView];
 }
 
 - (void)scrollViewTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     LOG_CURRENT_METHOD;
     
-    CGPoint pt = [[touches anyObject] locationInView:scrollView];
-    LOG(@"start = %f, current = %f", startLocation.x, pt.x);
+    CGPoint pt = [[touches anyObject] locationInView:self.view];
     CGRect frame = [thumbView frame];
     frame.origin.x += pt.x - currentLocation.x;
     frame.origin.y += pt.y - currentLocation.y;
@@ -222,7 +230,8 @@
 
 - (void)scrollViewTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     LOG_CURRENT_METHOD;
-    thumbView.hidden = YES;
+    [self disappearThumbViewWithAnimation];
+
 }
 
 
@@ -243,8 +252,38 @@
                                  kThumbnailSizeWidth + 10,
                                  kThumbnailSizeHeight + 10);
     thumbView.hidden = NO;
+    highliteBackView.hidden = NO; // 背景を少し暗くする
+    [self.view bringSubviewToFront:thumbView];
+    
+    thumbView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    [UIView animateWithDuration:0.3f
+                     animations:^(void){
+                             thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                     }
+                     completion:^(BOOL finished) {
+                         [ridhtCollectionView moveToPositionAWithAnimation:YES];
+                     }];
 }
 
+- (void)disappearThumbViewWithAnimation {
+    [UIView animateWithDuration:0.3f
+                     animations:^(void){
+                         thumbView.frame = CGRectMake(startLocation.x - (kThumbnailSizeWidth+10)/2,
+                                                      startLocation.y - (kThumbnailSizeHeight+10)/2,
+                                                      kThumbnailSizeWidth + 10,
+                                                      kThumbnailSizeHeight + 10);
+                         thumbView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+                     }
+                     completion:^(BOOL finished) {
+                         [ridhtCollectionView moveToPositionBWithAnimation:YES];
+                         thumbView.hidden = YES;
+                         highliteBackView.hidden = YES;
+                         thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                     }];
+}
+
+#pragma mark -
+#pragma mark UserAction
 
 - (void)reloadButtonTouchUpInside:(id)sender {
     [self reload];

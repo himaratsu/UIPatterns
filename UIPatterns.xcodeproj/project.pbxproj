@@ -90,7 +90,6 @@
 		200D3EDE164C4B0D00443D76 = {
 			isa = PBXGroup;
 			children = (
-				20BBADBC165258AC002BF4BA /* QuartzCore.framework */,
 				200D3EF3164C4B0D00443D76 /* UIPatterns */,
 				200D3F13164C4CD000443D76 /* Resource */,
 				200D3EEC164C4B0D00443D76 /* Frameworks */,
@@ -109,6 +108,7 @@
 		200D3EEC164C4B0D00443D76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				20BBADBC165258AC002BF4BA /* QuartzCore.framework */,
 				200D3EED164C4B0D00443D76 /* UIKit.framework */,
 				200D3EEF164C4B0D00443D76 /* Foundation.framework */,
 				200D3EF1164C4B0D00443D76 /* CoreGraphics.framework */,

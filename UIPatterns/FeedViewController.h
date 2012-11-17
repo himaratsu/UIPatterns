@@ -11,6 +11,7 @@
 #import "LazyImageView.h"
 #import "UIPatternThumbView.h"
 #import "TouchableUIScrollView.h"
+#import "DraggableView.h"
 
 #define NUM_OF_PAGES 4
 
@@ -21,6 +22,7 @@ TouchableUIScrollDelegate> {
     UIScrollView* scrollView;
     UIView* highliteBackView;
     
+    DraggableView* ridhtCollectionView;
     UIPatternThumbView* thumbView;
     CGPoint startLocation;
     CGPoint currentLocation;
