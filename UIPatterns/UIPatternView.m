@@ -7,15 +7,13 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "LazyImageView.h"
-
-#define LONG_PRESS_DELAY 0.5
+#import "UIPatternView.h"
 
 typedef enum LazyImageViewTag_ {
     LazyImageViewTagIndicatorView = 1,
 } LazyImageViewTag;
 
-@interface LazyImageView ()
+@interface UIPatternView ()
 
 - (void)setLoadingImage;
 - (void)setLoadErrorImage;
@@ -25,7 +23,7 @@ typedef enum LazyImageViewTag_ {
 
 @end
 
-@implementation LazyImageView
+@implementation UIPatternView
 
 - (id)initWithFrame:(CGRect)frame withUrl:(NSURL *)url {
     self = [super initWithFrame:frame];
@@ -61,7 +59,6 @@ typedef enum LazyImageViewTag_ {
     
     [self setLoadingImage];
 }
-
 
 - (void)reloadImage {
     [self setImage:nil];
@@ -132,19 +129,14 @@ typedef enum LazyImageViewTag_ {
 @synthesize uiPattern = uiPattern_;
 @synthesize delegate = delegate_;
 
-
+// UIImageViewがタッチされた時のふるまい
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     // 別スレッドで処理を続行
     [NSThread detachNewThreadSelector:@selector(touchImageView) toTarget:self withObject:nil];
     [super touchesBegan:touches withEvent:event];
 }
 
-- (void)touchLongImageView:(id)sender {
-    if ([delegate_ respondsToSelector:@selector(UIImageViewLongTap:)]) {
-        [delegate_ UIImageViewLongTap:self.image];
-    }
-}
-
+// タップ
 - (void)touchImageView {
     if ([delegate_ respondsToSelector:@selector(UIImageViewSingleTap:)]) {
         [delegate_ UIImageViewSingleTap:self.image];

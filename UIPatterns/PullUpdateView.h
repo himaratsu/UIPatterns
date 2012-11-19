@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+// 「引っ張って更新」機能を持つビュー
 @interface PullUpdateView : UIView
 
 @property (nonatomic, strong) UILabel* label;

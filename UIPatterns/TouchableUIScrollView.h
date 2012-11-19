@@ -10,6 +10,7 @@
 
 @protocol TouchableUIScrollDelegate;
 
+// タッチ可能なスクロールビュー
 @interface TouchableUIScrollView : UIScrollView
 
 @property (weak) id<TouchableUIScrollDelegate> myDelegate;

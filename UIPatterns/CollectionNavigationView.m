@@ -7,11 +7,10 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "DraggableView.h"
-#import "CollectionListView.h"
+#import "CollectionNavigationView.h"
+#import "CollectionItemListView.h"
 
-@implementation DraggableView
-
+@implementation CollectionNavigationView
 
 #pragma mark Initialization
 
@@ -19,18 +18,18 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // コレクションを表示するビュー
-        CollectionListView* collectionView = [[CollectionListView alloc]
+        // コレクションアイテムを表示するビュー
+        CollectionItemListView* collectionView = [[CollectionItemListView alloc]
                                   initWithFrame:CGRectMake(kTsumamiSizeWidth,
                                                            0,
                                                            frame.size.width-kTsumamiSizeWidth,
                                                            frame.size.height)];
-        collectionView.backgroundColor = kDefaultSubColor;
-        
+        collectionView.backgroundColor = kDefaultSubColor;        
+        // 影をつける
         collectionView.layer.shadowOpacity = 0.4;
         collectionView.layer.shadowOffset = CGSizeMake(-4.0, 4.0);
-
         [self addSubview:collectionView];
+        
         
         // 左下に表示する「ツマミ」
         TsumamiView* tsumamiView = [[TsumamiView alloc]
@@ -40,10 +39,9 @@
                                                              kTsumamiSizeHeight)];
         tsumamiView.delegate = self;
         tsumamiView.backgroundColor = collectionView.backgroundColor;
-        
+        // 影をつける
         tsumamiView.layer.shadowOpacity = 0.4;
         tsumamiView.layer.shadowOffset = CGSizeMake(-4.0, 4.0);
-        
         [self addSubview:tsumamiView];
         
         isTouchesMove = NO;
@@ -53,8 +51,8 @@
         posB = CGRectMake(frame.origin.x+kMenuBarMoveRange, frame.origin.y,
                           frame.size.width, frame.size.height);
 
-        borderHalf  = frame.origin.x+kMenuBarMoveRange/2-kTsumamiSizeWidth;
         borderLeft  = frame.origin.x;
+        borderHalf  = frame.origin.x+kMenuBarMoveRange/2-kTsumamiSizeWidth;
         borderRight = frame.origin.x+kMenuBarMoveRange;
     }
     return self;
@@ -63,15 +61,17 @@
 #pragma mark -
 #pragma mark TsumamiViewTouchActionDelegate
 
+// ツマミが移動開始した
 - (void)touchesBeganTsumamiView:(NSSet *)touches withEvent:(UIEvent *)event {
     isTouchesMove = NO;
-    startLocation = [[touches anyObject] locationInView:self];
+    startLocation = [[touches anyObject] locationInView:self];  // 初期位置を覚えておく
     [[self superview] bringSubviewToFront:self];
 }
 
+// ツマミが移動した
 - (void)touchesMovedTsumamiView:(NSSet *)touches withEvent:(UIEvent *)event {
     if (isTouchesMove == NO) {
-        isTouchesMove = YES;
+        isTouchesMove = YES;    // 少しでも移動した
     }
     
     CGPoint pt = [[touches anyObject] locationInView:self];
@@ -83,8 +83,9 @@
     }
 }
 
+// ツマミが移動終了した
 - (void)touchesEndedTsumamiView:(NSSet *)touches withEvent:(UIEvent *)event {    
-    // 移動してなければposA<->posBに移動
+    // 移動してなければposA <--> posBに移動
     if (isTouchesMove == NO) {
         if (isCurrentPosA) {
             [self moveToPositionBWithAnimation:YES];
@@ -92,7 +93,7 @@
             [self moveToPositionAWithAnimation:YES];
         }
     } else {
-        // 移動した場合、posAとposBの近い方に移動
+        // 移動していた場合、posAとposBの近い方に移動
         if (self.frame.origin.x <= borderHalf) {
             [self moveToPositionAWithAnimation:YES];
         } else {

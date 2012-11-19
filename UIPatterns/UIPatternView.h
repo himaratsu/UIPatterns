@@ -9,25 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "UIPattern.h"
 
-@protocol ActionImageViewDelegate;
+@protocol TapUIImageViewDelegate;
 
-@interface LazyImageView : UIImageView {
+@interface UIPatternView : UIImageView {
     BOOL isPress;
 }
 
 - (id)initWithFrame:(CGRect)frame withUrl:(NSURL *)url;
-
 - (void)startLoadImage;
 - (void)reloadImage;
 - (void)cancelLoading;
 
 @property (nonatomic, strong) NSURL *imageUrl;
 @property (nonatomic, strong) UIPattern* uiPattern;
-@property (nonatomic, weak) id<ActionImageViewDelegate> delegate;
+@property (nonatomic, weak) id<TapUIImageViewDelegate> delegate;
 
 @end
 
-@protocol ActionImageViewDelegate <NSObject>
+@protocol TapUIImageViewDelegate <NSObject>
 
 - (void)UIImageViewSingleTap:(UIImage*)image;   // タップ
 - (void)UIImageViewLongTap:(UIImage*)image;     // 長押しタップ

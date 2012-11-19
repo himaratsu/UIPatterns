@@ -18,6 +18,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        // 背景色
         self.backgroundColor = [UIColor whiteColor];
         
         // 影落とす

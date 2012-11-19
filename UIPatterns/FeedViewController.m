@@ -20,6 +20,7 @@
 #pragma mark -
 #pragma mark Initialization
 
+// レイアウト初期化
 - (void)_initLayout {
     // 全体のスクロールビュー
     scrollView = [[TouchableUIScrollView alloc] initWithFrame:self.view.bounds];
@@ -27,14 +28,13 @@
     scrollView.showsHorizontalScrollIndicator = YES;
     scrollView.showsVerticalScrollIndicator   = YES;
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
-    scrollView.delegate = self;
-    scrollView.myDelegate = self;
+    scrollView.delegate = self;     // UIScrollViewのデリゲート
+    scrollView.myDelegate = self;   // TouchableUIScrollViewのデリゲート
     [self.view addSubview:scrollView];
     
-    // 「引っ張って更新」のビュー
+    // 「引っ張って更新」ビュー
     pullView = [[PullUpdateView alloc] initWithFrame:CGRectMake(0, -kPullUpdateViewHeight, 2048, kPullUpdateViewHeight)];
     [scrollView addSubview:pullView];
-    
     
     // 画面上部の青色ライン
     UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2048, 15)];
@@ -78,17 +78,18 @@
     highliteBackView.hidden = YES;
     [scrollView addSubview:highliteBackView];
     
-    // ドラッグ時要のサムネイルビュー
+    // ドラッグ時に表示するサムネイルビュー
     thumbView = [[UIPatternThumbView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [self.view addSubview:thumbView];
     
     // 右側のコレクションビュー
-    ridhtCollectionView = [[DraggableView alloc]
+    ridhtCollectionView = [[CollectionNavigationView alloc]
                                           initWithFrame:CGRectMake(1024-195, 50, 200, 700)];
     [ridhtCollectionView moveToPositionBWithAnimation:NO];  // 最初は隠す
     [self.view addSubview:ridhtCollectionView];
 }
 
+// 配置したUIPatternをビューから取り除く
 - (void)resetUIPatternLayout {
     for (UIView* v in [scrollView subviews]) {
         if (v.tag == kUIImageTag) {
@@ -97,7 +98,7 @@
     }
 }
 
-// UIPattern画像を再読み込み
+// UIPatternを読み込み
 - (void)reload {
     [self resetUIPatternLayout];
     FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
@@ -141,7 +142,6 @@
 (UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft
             || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-    //画面の左側にホームボタン
 }
 
 - (NSUInteger)supportedInterfaceOrientations{
@@ -166,13 +166,14 @@
                                         120+kUIPatternImageSizeHeight*(total/numberOfUIPatternInRow)
                                         );
     
+    // UIPatternを配置
     NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
     for (int i=0; i<total; i++) {
         int x = i % numberOfUIPatternInRow;
         int y = i / numberOfUIPatternInRow;
         
         UIPattern* pattern = [uiPatterns objectAtIndex:i];
-        LazyImageView* lazyImageView = [[LazyImageView alloc]
+        UIPatternView* lazyImageView = [[UIPatternView alloc]
                                         initWithFrame:CGRectMake((kUIPatternImageSizeWidth+10)*x + kMarginLeft,
                                                                  (kUIPatternImageSizeHeight+10)*y + 120,
                                                                  kUIPatternImageSizeWidth - 20,

@@ -22,26 +22,15 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchesBegan");
-    //    startLocation = [[touches anyObject] locationInView:self];
-    //    [[self superview] bringSubviewToFront:self];
-    
     [delegate_ touchesBeganTsumamiView:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchesMoved");
-    //    CGPoint pt = [[touches anyObject] locationInView:self];
-    //	CGRect frame = [self frame];
-    //	frame.origin.x += pt.x - startLocation.x;
-    //	[self setFrame:frame];
-    
     [delegate_ touchesMovedTsumamiView:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"touchesEnded");
-    
     [delegate_ touchesEndedTsumamiView:touches withEvent:event];
 }
+
 @end

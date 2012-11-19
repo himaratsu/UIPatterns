@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CollectionGetAPI.h"
 
-@interface CollectionListView : UIView <HttpRequestDelegate> {
+@interface CollectionItemListView : UIView <HttpRequestDelegate> {
     UIScrollView *scrollView;
 }
 

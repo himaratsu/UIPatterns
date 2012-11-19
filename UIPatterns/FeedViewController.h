@@ -8,27 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonAPI.h"
-#import "LazyImageView.h"
+#import "UIPatternView.h"
 #import "UIPatternThumbView.h"
 #import "TouchableUIScrollView.h"
-#import "DraggableView.h"
+#import "CollectionNavigationView.h"
 #import "PullUpdateView.h"
-
-#define NUM_OF_PAGES 4
 
 @interface FeedViewController : UIViewController 
 <HttpRequestDelegate,
-ActionImageViewDelegate,
+TapUIImageViewDelegate,
 TouchableUIScrollDelegate,
 UIScrollViewDelegate> {
-    TouchableUIScrollView* scrollView;
-    UIView* highliteBackView;
+    TouchableUIScrollView* scrollView;      // タッチ可能なスクロールビュー
+    CollectionNavigationView* ridhtCollectionView;  // コレクションナビゲーションバー
+    PullUpdateView *pullView;               // 「引っ張って更新」ビュー
     
-    DraggableView* ridhtCollectionView;
-    UIPatternThumbView* thumbView;
-    PullUpdateView *pullView;
-    CGPoint startLocation;
-    CGPoint currentLocation;
+    UIView* highliteBackView;               // ドラッグ中の背景ビュー
+    UIPatternThumbView* thumbView;          // ドラッグ中に表示するサムネイルビュー
+    
+    CGPoint startLocation;                  // ドラッグ開始位置
+    CGPoint currentLocation;                // ドラッグ中の現在位置
 }
 
 @end

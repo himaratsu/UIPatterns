@@ -6,10 +6,10 @@
 //  Copyright (c) 2012年 mashroom. All rights reserved.
 //
 
-#import "CollectionListView.h"
+#import "CollectionItemListView.h"
 #import "CollectionItemView.h"
 
-@implementation CollectionListView
+@implementation CollectionItemListView
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -44,6 +44,7 @@
     
     int total = [[result objectForKey:@"totalCount"] intValue];
     
+    // コレクションアイテムを配置する
     NSArray* collections = [result objectForKey:@"collections"];
     for (int i=0; i<total; i++) {
         CollectionItem* colItem = [collections objectAtIndex:i];

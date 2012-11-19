@@ -15,6 +15,8 @@
 #pragma mark -
 #pragma mark Network Method
 
+// paramに格納されたkey->valueを
+// key=value と変換して&で連結する
 - (NSString*)composeKeyAndValueParams:(NSDictionary*)param {
     NSMutableString* path = [[NSMutableString alloc] init];
     NSArray* allKeys = [param allKeys];
@@ -29,6 +31,7 @@
     return path;
 }
 
+// リクエストURLを作成する
 - (NSString*)makeUrl:(NSDictionary *)param {
     NSMutableString* url = [[NSMutableString alloc] initWithString:kUIPatternsBaseUrl];
     [url appendString:module_];
@@ -39,6 +42,7 @@
     return url;
 }
 
+// リクエストを送信（プライベートメソッド）
 - (void)_send: (NSDictionary *)param {
     @autoreleasepool {
         NSString* urlStr = [self makeUrl:param];
@@ -87,11 +91,13 @@
     }
 }
 
+// リクエストを送信（パラメータあり）
 - (void)send:(NSDictionary *)param {
     // サブスレッドを作成する
     [NSThread detachNewThreadSelector:@selector(_send:) toTarget:self withObject:param];
 }
 
+// リクエストを送信（パラメータなし）
 - (void)send {
     [self send:nil];
 }

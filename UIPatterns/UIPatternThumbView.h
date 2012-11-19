@@ -13,6 +13,6 @@
     UIImageView* imageView;
 }
 
-@property (nonatomic, weak) UIImage* image;
+@property (nonatomic, weak) UIImage* image; // サムネイル画像
 
 @end

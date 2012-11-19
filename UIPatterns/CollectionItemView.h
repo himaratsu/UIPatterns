@@ -10,9 +10,12 @@
 #import "CollectionItem.h"
 
 @interface CollectionItemView : UIView {
-    UILabel* label;
+    UILabel* collectionItemTitleLabel;
+    UIButton* collectionItemTitleView;
 }
 
 @property (nonatomic, strong) CollectionItem *collectionItem;
+
+- (void)setHighlighted:(BOOL)boolean;
 
 @end
