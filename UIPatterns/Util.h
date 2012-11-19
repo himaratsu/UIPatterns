@@ -32,6 +32,7 @@
 #define numberOfUIPatternInRow 3    // 一行に何枚表示するか
 
 #define kUIImageTag 100
+#define kCollectionItemTag 101
 
 @interface Util : NSObject
 

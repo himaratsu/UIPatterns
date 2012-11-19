@@ -30,6 +30,12 @@
 		20BBADBE16525926002BF4BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BBADBC165258AC002BF4BA /* QuartzCore.framework */; };
 		20BD44D516529DB600BB3829 /* UIPatternThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BD44D416529DB600BB3829 /* UIPatternThumbView.m */; };
 		20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C65FE6164E4D2700F9F343 /* UIPattern.m */; };
+		20C660811657CE740041006B /* CollectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C660801657CE740041006B /* CollectionItem.m */; };
+		20C660851657CFE60041006B /* CollectionItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C660841657CFE60041006B /* CollectionItemView.m */; };
+		20C6608B1657DAD70041006B /* collection_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C660891657DAD70041006B /* collection_on.png */; };
+		20C6608C1657DAD70041006B /* collection_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 20C6608A1657DAD70041006B /* collection_off.png */; };
+		20C6608F1657F1580041006B /* CollectionGetAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C6608E1657F1580041006B /* CollectionGetAPI.m */; };
+		20C660921657FA740041006B /* CollectionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C660911657FA740041006B /* CollectionListView.m */; };
 		20F0654B16552969007AE090 /* TouchableUIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20F0654A16552969007AE090 /* TouchableUIScrollView.m */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +77,16 @@
 		20BD44D416529DB600BB3829 /* UIPatternThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPatternThumbView.m; sourceTree = "<group>"; };
 		20C65FE5164E4D2700F9F343 /* UIPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPattern.h; sourceTree = "<group>"; };
 		20C65FE6164E4D2700F9F343 /* UIPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPattern.m; sourceTree = "<group>"; };
+		20C6607F1657CE740041006B /* CollectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionItem.h; sourceTree = "<group>"; };
+		20C660801657CE740041006B /* CollectionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionItem.m; sourceTree = "<group>"; };
+		20C660831657CFE60041006B /* CollectionItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionItemView.h; sourceTree = "<group>"; };
+		20C660841657CFE60041006B /* CollectionItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionItemView.m; sourceTree = "<group>"; };
+		20C660891657DAD70041006B /* collection_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collection_on.png; sourceTree = "<group>"; };
+		20C6608A1657DAD70041006B /* collection_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collection_off.png; sourceTree = "<group>"; };
+		20C6608D1657F1580041006B /* CollectionGetAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionGetAPI.h; sourceTree = "<group>"; };
+		20C6608E1657F1580041006B /* CollectionGetAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionGetAPI.m; sourceTree = "<group>"; };
+		20C660901657FA740041006B /* CollectionListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionListView.h; sourceTree = "<group>"; };
+		20C660911657FA740041006B /* CollectionListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionListView.m; sourceTree = "<group>"; };
 		20F0654916552969007AE090 /* TouchableUIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchableUIScrollView.h; sourceTree = "<group>"; };
 		20F0654A16552969007AE090 /* TouchableUIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchableUIScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,6 +168,8 @@
 		200D3F10164C4CB100443D76 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				20C6607F1657CE740041006B /* CollectionItem.h */,
+				20C660801657CE740041006B /* CollectionItem.m */,
 				200D3F15164C4CF900443D76 /* API */,
 				20C65FE5164E4D2700F9F343 /* UIPattern.h */,
 				20C65FE6164E4D2700F9F343 /* UIPattern.m */,
@@ -179,6 +197,10 @@
 				20BA6A871653E3310064728E /* DraggableView.m */,
 				20BA6A8A1653E3580064728E /* TsumamiView.h */,
 				20BA6A8B1653E3580064728E /* TsumamiView.m */,
+				20C660831657CFE60041006B /* CollectionItemView.h */,
+				20C660841657CFE60041006B /* CollectionItemView.m */,
+				20C660901657FA740041006B /* CollectionListView.h */,
+				20C660911657FA740041006B /* CollectionListView.m */,
 				20F0654916552969007AE090 /* TouchableUIScrollView.h */,
 				20F0654A16552969007AE090 /* TouchableUIScrollView.m */,
 				20947180165764F2002550EE /* PullUpdateView.h */,
@@ -192,6 +214,8 @@
 			children = (
 				203C9CEB16526CF300C9DFE8 /* search_icon.png */,
 				200D3850165153A40067FFCD /* noimage.png */,
+				20C660891657DAD70041006B /* collection_on.png */,
+				20C6608A1657DAD70041006B /* collection_off.png */,
 			);
 			name = Resource;
 			path = UIPatterns;
@@ -212,6 +236,8 @@
 				200D3F17164C510C00443D76 /* CommonAPI.m */,
 				200D3F19164C557600443D76 /* FeedAPI.h */,
 				200D3F1A164C557600443D76 /* FeedAPI.m */,
+				20C6608D1657F1580041006B /* CollectionGetAPI.h */,
+				20C6608E1657F1580041006B /* CollectionGetAPI.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -274,6 +300,8 @@
 				200D3F0A164C4B0D00443D76 /* FeedViewController.xib in Resources */,
 				200D3851165153A40067FFCD /* noimage.png in Resources */,
 				203C9CEC16526CF300C9DFE8 /* search_icon.png in Resources */,
+				20C6608B1657DAD70041006B /* collection_on.png in Resources */,
+				20C6608C1657DAD70041006B /* collection_off.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +325,10 @@
 				20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */,
 				20F0654B16552969007AE090 /* TouchableUIScrollView.m in Sources */,
 				20947182165764F2002550EE /* PullUpdateView.m in Sources */,
+				20C660811657CE740041006B /* CollectionItem.m in Sources */,
+				20C660851657CFE60041006B /* CollectionItemView.m in Sources */,
+				20C6608F1657F1580041006B /* CollectionGetAPI.m in Sources */,
+				20C660921657FA740041006B /* CollectionListView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

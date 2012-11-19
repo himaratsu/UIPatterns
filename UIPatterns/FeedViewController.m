@@ -220,7 +220,12 @@
 }
 
 - (void)scrollViewTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self disappearThumbViewWithAnimation];
+    CGPoint pt = [[touches anyObject] locationInView:self.view];
+    if (pt.x > 1024 - ridhtCollectionView.frame.size.width) {
+        [self disappearThumbViewOnCollectionWithAnimation];
+    } else {
+        [self disappearThumbViewWithAnimation];
+    }
 }
 
 #pragma mark -
@@ -270,6 +275,23 @@
                      }];
 }
 
+- (void)disappearThumbViewOnCollectionWithAnimation {
+    CGPoint pt = CGPointMake(1000, 300);
+    [UIView animateWithDuration:0.3f
+                     animations:^(void){
+                         thumbView.frame = CGRectMake(pt.x - (kThumbnailSizeWidth+10)/2,
+                                                      pt.y - (kThumbnailSizeHeight+10)/2,
+                                                      kThumbnailSizeWidth + 10,
+                                                      kThumbnailSizeHeight + 10);
+                         thumbView.transform = CGAffineTransformMakeScale(0.2, 0.2);
+                     }
+                     completion:^(BOOL finished) {
+                         thumbView.hidden = YES;
+                         highliteBackView.hidden = YES;
+                         thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                     }];
+}
+
 #pragma mark -
 #pragma mark UIScrollViewDelegate
 
@@ -278,7 +300,7 @@
 //    LOG(@"x, y = %f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
     // スクロール量によって文言かえる
     CGFloat y = scrollView.contentOffset.y;
-    if (y < -50) {
+    if (y < -80) {
         pullView.label.text = @"このまま指を離して更新！";
     } else {
         pullView.label.text = @"引っ張って更新";
@@ -288,7 +310,7 @@
 // ドラッグ終了
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     CGFloat y = scrollView.contentOffset.y;
-    if (y < -50) {
+    if (y < -80) {
         [self reload];
     }
     pullView.label.text = @"引っ張って更新";

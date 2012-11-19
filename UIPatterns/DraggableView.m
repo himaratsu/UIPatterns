@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "DraggableView.h"
+#import "CollectionListView.h"
 
 @implementation DraggableView
 
@@ -19,7 +20,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // コレクションを表示するビュー
-        UIView* collectionView = [[UIView alloc]
+        CollectionListView* collectionView = [[CollectionListView alloc]
                                   initWithFrame:CGRectMake(kTsumamiSizeWidth,
                                                            0,
                                                            frame.size.width-kTsumamiSizeWidth,
