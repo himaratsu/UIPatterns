@@ -10,6 +10,7 @@
 #import "CollectionItemView.h"
 
 @implementation CollectionItemListView
+@synthesize delegate = delegate_;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -62,6 +63,53 @@
 
 - (void)didErrorHttpRequest:(id)sender {
     
+}
+
+
+#pragma mark -
+#pragma mark checkColision
+
+- (void)scrollTouchMoved:(NSSet*)touches {
+    LOG_CURRENT_METHOD;
+    CGPoint pt = [[touches anyObject] locationInView:scrollView];
+    LOG(@"%f, %f", pt.x, pt.y);
+    
+    // ナビゲーションバー上ではサムネイルは0.6倍のサイズとなっている
+    CGRect touchFrame = CGRectMake(pt.x-kThumbnailSizeWidth*0.6/2,
+                                   pt.y-kThumbnailSizeHeight*0.6/2,
+                                   kThumbnailSizeWidth*0.6,
+                                   kThumbnailSizeHeight*0.6);
+    
+    for (UIView *v in [scrollView subviews]) {
+        CollectionItemView *colItemView = (CollectionItemView*)v;
+        if (CGRectContainsPoint(v.frame, pt)) {
+            // 衝突！
+            LOG(@"衝突 → %@", colItemView.collectionItem.title);
+            [colItemView setHighlighted:YES];
+        } else {
+            [colItemView setHighlighted:NO];
+        }
+    }
+    
+}
+
+- (void)scrollTouchEnded:(NSSet*)touches {
+    LOG_CURRENT_METHOD;
+    CGPoint pt = [[touches anyObject] locationInView:scrollView];
+    LOG(@"%f, %f", pt.x, pt.y);
+    
+    for (UIView *v in [scrollView subviews]) {
+        CollectionItemView *colItemView = (CollectionItemView*)v;
+        if (CGRectContainsPoint(v.frame, pt)) {
+            // ホバー中のコレクションの中心に向けてAction
+            CGFloat diff_x = colItemView.center.x - pt.x;
+            CGFloat diff_y = colItemView.center.y - pt.y;
+            [delegate_ collectionItemHoverRelease:touches diffX:diff_x diffY:diff_y];
+            [colItemView setHighlighted:NO];
+            break;
+        }
+    }
+
 }
 
 

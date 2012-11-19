@@ -13,12 +13,14 @@
 #import "TouchableUIScrollView.h"
 #import "CollectionNavigationView.h"
 #import "PullUpdateView.h"
+#import "CollectionItemListView.h"
 
 @interface FeedViewController : UIViewController 
 <HttpRequestDelegate,
 TapUIImageViewDelegate,
 TouchableUIScrollDelegate,
-UIScrollViewDelegate> {
+UIScrollViewDelegate,
+CollectionItemHoverDelegate> {
     TouchableUIScrollView* scrollView;      // タッチ可能なスクロールビュー
     CollectionNavigationView* ridhtCollectionView;  // コレクションナビゲーションバー
     PullUpdateView *pullView;               // 「引っ張って更新」ビュー

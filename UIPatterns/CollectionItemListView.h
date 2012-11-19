@@ -9,8 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "CollectionGetAPI.h"
 
+@protocol CollectionItemHoverDelegate;
+
 @interface CollectionItemListView : UIView <HttpRequestDelegate> {
     UIScrollView *scrollView;
 }
+
+@property (nonatomic, weak) id<CollectionItemHoverDelegate> delegate;
+- (void)scrollTouchMoved:(NSSet*)touches;
+- (void)scrollTouchEnded:(NSSet*)touches;
+
+@end
+
+
+@protocol CollectionItemHoverDelegate <NSObject>
+
+- (void)collectionItemHoverRelease:(NSSet*)touches diffX:(CGFloat)x diffY:(CGFloat)y;
 
 @end

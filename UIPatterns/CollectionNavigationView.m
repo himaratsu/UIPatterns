@@ -8,9 +8,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "CollectionNavigationView.h"
-#import "CollectionItemListView.h"
 
 @implementation CollectionNavigationView
+@synthesize delegate = delegate_;
 
 #pragma mark Initialization
 
@@ -19,7 +19,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // コレクションアイテムを表示するビュー
-        CollectionItemListView* collectionView = [[CollectionItemListView alloc]
+        collectionView = [[CollectionItemListView alloc]
                                   initWithFrame:CGRectMake(kTsumamiSizeWidth,
                                                            0,
                                                            frame.size.width-kTsumamiSizeWidth,
@@ -56,6 +56,11 @@
         borderRight = frame.origin.x+kMenuBarMoveRange;
     }
     return self;
+}
+
+- (void)setDelegate:(id<CollectionItemHoverDelegate>)delegate {
+    collectionView.delegate = delegate;
+    delegate_ = delegate;
 }
 
 #pragma mark -
@@ -151,6 +156,17 @@
         self.frame = posB;
         isCurrentPosA = NO;
     }
+}
+
+#pragma mark -
+#pragma mark checkColision
+
+- (void)scrollTouchMoved:(NSSet*)touches {
+    [collectionView scrollTouchMoved:touches];
+}
+
+- (void)scrollTouchEnded:(NSSet*)touches {
+    [collectionView scrollTouchEnded:touches];
 }
 
 @end

@@ -25,7 +25,6 @@
 #pragma mark Touches Method
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG(@"customTouchesBegan");
     self.scrollEnabled = NO;
     [self.nextResponder touchesBegan:touches withEvent:event];
     if ([myDelegate respondsToSelector:@selector(scrollViewTouchesBegan:withEvent:)]) {
@@ -34,7 +33,6 @@
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG(@"customTouchesMoved");
     [self.nextResponder touchesMoved:touches withEvent:event];
     if ([myDelegate respondsToSelector:@selector(scrollViewTouchesMoved:withEvent:)]) {
         [myDelegate scrollViewTouchesMoved:touches withEvent:event];
@@ -42,7 +40,6 @@
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    LOG(@"customTouchesEnded");
     self.scrollEnabled = YES;
     [self.nextResponder touchesEnded:touches withEvent:event];
     if ([myDelegate respondsToSelector:@selector(scrollViewTouchesEnded:withEvent:)]) {

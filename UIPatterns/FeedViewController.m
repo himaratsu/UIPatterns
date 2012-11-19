@@ -86,6 +86,7 @@
     ridhtCollectionView = [[CollectionNavigationView alloc]
                                           initWithFrame:CGRectMake(1024-195, 50, 200, 700)];
     [ridhtCollectionView moveToPositionBWithAnimation:NO];  // 最初は隠す
+    ridhtCollectionView.delegate = self;
     [self.view addSubview:ridhtCollectionView];
 }
 
@@ -218,12 +219,20 @@
     
     currentLocation = CGPointMake(frame.origin.x + frame.size.width/2,
                                 frame.origin.y + frame.size.height/2);
+    
+    // rightCollectionView上にのりかかった場合
+    if (pt.x > 1024 - ridhtCollectionView.frame.size.width + kTsumamiSizeWidth) {
+        [self scaleChangeThumbViewWithScale:0.6];
+        [ridhtCollectionView scrollTouchMoved:touches];
+    } else {
+        [self scaleChangeThumbViewWithScale:1.0];
+    }
 }
 
 - (void)scrollViewTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint pt = [[touches anyObject] locationInView:self.view];
-    if (pt.x > 1024 - ridhtCollectionView.frame.size.width) {
-        [self disappearThumbViewOnCollectionWithAnimation];
+    if (pt.x > 1024 - ridhtCollectionView.frame.size.width + kTsumamiSizeWidth) {
+        [ridhtCollectionView scrollTouchEnded:touches];
     } else {
         [self disappearThumbViewWithAnimation];
     }
@@ -276,20 +285,30 @@
                      }];
 }
 
-- (void)disappearThumbViewOnCollectionWithAnimation {
-    CGPoint pt = CGPointMake(1000, 300);
-    [UIView animateWithDuration:0.3f
+- (void)disappearThumbViewOnCollectionWithAnimation:(CGPoint)pt {
+    [UIView animateWithDuration:0.4f
                      animations:^(void){
-                         thumbView.frame = CGRectMake(pt.x - (kThumbnailSizeWidth+10)/2,
-                                                      pt.y - (kThumbnailSizeHeight+10)/2,
-                                                      kThumbnailSizeWidth + 10,
-                                                      kThumbnailSizeHeight + 10);
-                         thumbView.transform = CGAffineTransformMakeScale(0.2, 0.2);
+                         thumbView.frame = CGRectMake(pt.x - (kThumbnailSizeWidth*0.6)/2,
+                                                      pt.y - (kThumbnailSizeHeight*0.6)/2,
+                                                      kThumbnailSizeWidth*0.6,
+                                                      kThumbnailSizeHeight*0.6);
+                         thumbView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+                         thumbView.alpha = 0.0;
                      }
                      completion:^(BOOL finished) {
                          thumbView.hidden = YES;
                          highliteBackView.hidden = YES;
+                         thumbView.alpha = 1.0;
                          thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                     }];
+}
+
+- (void)scaleChangeThumbViewWithScale:(CGFloat)scale {
+    [UIView animateWithDuration:0.2f
+                     animations:^(void){
+                         thumbView.transform = CGAffineTransformMakeScale(scale, scale);
+                     }
+                     completion:^(BOOL finished) {
                      }];
 }
 
@@ -316,4 +335,16 @@
     }
     pullView.label.text = @"引っ張って更新";
 }
+
+
+#pragma mark -
+#pragma mark CollectionItemHoverDelegate Method
+
+- (void)collectionItemHoverRelease:(NSSet*)touches diffX:(CGFloat)x diffY:(CGFloat)y {
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+    point.x += x;
+    point.y += y;
+    [self disappearThumbViewOnCollectionWithAnimation:point];
+}
+
 @end
