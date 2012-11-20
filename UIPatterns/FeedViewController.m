@@ -71,6 +71,13 @@
     searchField.textColor = [UIColor grayColor];
     [scrollView addSubview:searchField];
     
+    // カテゴリtmp
+    UIButton *tmp = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    tmp.frame = CGRectMake(550, 53, 100, 35);
+    [tmp setTitle:@"Search" forState:UIControlStateNormal];
+    [tmp addTarget:self action:@selector(tapSettings) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:tmp];
+    
     // 画像ドラッグ時の背景ビュー
     highliteBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768*3)];
     highliteBackView.backgroundColor = [UIColor blackColor];
@@ -88,6 +95,9 @@
     [ridhtCollectionView moveToPositionBWithAnimation:NO];  // 最初は隠す
     ridhtCollectionView.delegate = self;
     [self.view addSubview:ridhtCollectionView];
+    
+    // API用のパラメータ格納庫
+    param = nil;
 }
 
 // 配置したUIPatternをビューから取り除く
@@ -103,7 +113,8 @@
 - (void)reload {
     [self resetUIPatternLayout];
     FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
-    [feedAPI send];
+    [feedAPI send:param];
+    param = nil;
 }
 
 #pragma mark -
@@ -163,8 +174,9 @@
     int total = [[result objectForKey:@"totalCount"] intValue];
     
     // 描画領域を確保
+    CGFloat h = MAX(120+kUIPatternImageSizeHeight*(total/numberOfUIPatternInRow), 800);
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width,
-                                        120+kUIPatternImageSizeHeight*(total/numberOfUIPatternInRow)
+                                        h
                                         );
     
     // UIPatternを配置
@@ -207,7 +219,11 @@
 - (void)scrollViewTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint point = [[touches anyObject] locationInView:self.view];
     currentLocation = startLocation = point;
-    [self appearThumbViewWithAnimation:currentLocation];
+    
+    // サムネイル画像がセットされているかどうかで、領域内外を判断する
+    if (thumbView.image != nil) {
+        [self appearThumbViewWithAnimation:currentLocation];
+    }
 }
 
 - (void)scrollViewTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -247,6 +263,12 @@
 
 // 通常タップ
 - (void)UIImageViewSingleTap:(UIImage *)image {
+//    thumbView.image = image;
+
+}
+
+// 長押しタップ
+- (void)UIImageViewLongTap:(UIImage *)image {
     thumbView.image = image;
 }
 
@@ -286,6 +308,7 @@
                          thumbView.hidden = YES;
                          highliteBackView.hidden = YES;
                          thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                         thumbView.image = nil;
                      }];
 }
 
@@ -304,6 +327,7 @@
                          highliteBackView.hidden = YES;
                          thumbView.alpha = 1.0;
                          thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                         thumbView.image = nil;
                      }];
 }
 
@@ -353,6 +377,18 @@
 
 - (void)collectionItemNoHoverRelease {
     [self disappearThumbViewWithAnimation];
+}
+
+
+#pragma mark -
+
+- (void)tapSettings {
+    // カテゴリをセット
+    param = [NSMutableDictionary dictionary];
+    [param setObject:@"search" forKey:@"category"];
+    
+    // 再読み込み
+    [self reload];
 }
 
 @end

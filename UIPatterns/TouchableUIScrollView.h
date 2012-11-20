@@ -11,7 +11,10 @@
 @protocol TouchableUIScrollDelegate;
 
 // タッチ可能なスクロールビュー
-@interface TouchableUIScrollView : UIScrollView
+@interface TouchableUIScrollView : UIScrollView {
+    BOOL longPressBegan;
+    NSSet* startTouches;
+}
 
 @property (weak) id<TouchableUIScrollDelegate> myDelegate;
 @end

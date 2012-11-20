@@ -34,6 +34,8 @@
 #define kUIImageTag 100
 #define kCollectionItemTag 101
 
+#define longPressTime 0.1   // 長押しと判断されるまでの時間
+
 @interface Util : NSObject
 
 + (void)hideStatusBar;

@@ -30,6 +30,8 @@ CollectionItemHoverDelegate> {
     
     CGPoint startLocation;                  // ドラッグ開始位置
     CGPoint currentLocation;                // ドラッグ中の現在位置
+    
+    NSMutableDictionary* param;
 }
 
 @end

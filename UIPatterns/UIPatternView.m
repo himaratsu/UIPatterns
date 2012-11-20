@@ -38,6 +38,8 @@ typedef enum LazyImageViewTag_ {
         
         // 画像URLをセット
         [self setImageUrl:url];
+        
+        longPressBegan = NO;
     }
     
     return self;
@@ -131,17 +133,58 @@ typedef enum LazyImageViewTag_ {
 
 // UIImageViewがタッチされた時のふるまい
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    // 別スレッドで処理を続行
-    [NSThread detachNewThreadSelector:@selector(touchImageView) toTarget:self withObject:nil];
     [super touchesBegan:touches withEvent:event];
+    [self performSelector:@selector(beginLongPress) withObject:nil afterDelay:longPressTime*0.8];
 }
 
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesMoved:touches withEvent:event];
+    [self endLongPress];    // 少しでも動くと長押しキャンセル
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesEnded:touches withEvent:event];
+    [self endLongPress];
+}
+
+
 // タップ
-- (void)touchImageView {
+- (void)UIImageViewSingleTap {
+    LOG(@"シングルタップ");
     if ([delegate_ respondsToSelector:@selector(UIImageViewSingleTap:)]) {
         [delegate_ UIImageViewSingleTap:self.image];
     }
 }
 
+- (void)UIImageViewLongTap {
+    LOG(@"長押しタップ");
+    if ([delegate_ respondsToSelector:@selector(UIImageViewLongTap:)]) {
+        [delegate_ UIImageViewLongTap:self.image];
+    }
+}
+
+
+#pragma mark -
+
+- (void)beginLongPress
+{
+    // 長押しを開始
+    if (!longPressBegan) {
+        longPressBegan = YES;
+        [self UIImageViewLongTap];
+    }
+}
+
+- (void)endLongPress
+{
+    // beginLongPress の呼び出しをキャンセル。
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(beginLongPress) object:nil];
+    
+    // 長押しが開始されていない = シングルタップ
+    if (longPressBegan == NO) {
+        [self UIImageViewSingleTap];
+    }
+    longPressBegan = NO;
+}
 
 @end

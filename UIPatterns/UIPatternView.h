@@ -12,7 +12,7 @@
 @protocol TapUIImageViewDelegate;
 
 @interface UIPatternView : UIImageView {
-    BOOL isPress;
+    BOOL longPressBegan;
 }
 
 - (id)initWithFrame:(CGRect)frame withUrl:(NSURL *)url;
