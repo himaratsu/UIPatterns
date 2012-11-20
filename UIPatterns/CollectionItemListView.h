@@ -25,5 +25,6 @@
 @protocol CollectionItemHoverDelegate <NSObject>
 
 - (void)collectionItemHoverRelease:(NSSet*)touches diffX:(CGFloat)x diffY:(CGFloat)y;
+- (void)collectionItemNoHoverRelease;
 
 @end

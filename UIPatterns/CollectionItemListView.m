@@ -98,6 +98,7 @@
     CGPoint pt = [[touches anyObject] locationInView:scrollView];
     LOG(@"%f, %f", pt.x, pt.y);
     
+    BOOL isHover = NO;
     for (UIView *v in [scrollView subviews]) {
         CollectionItemView *colItemView = (CollectionItemView*)v;
         if (CGRectContainsPoint(v.frame, pt)) {
@@ -106,10 +107,15 @@
             CGFloat diff_y = colItemView.center.y - pt.y;
             [delegate_ collectionItemHoverRelease:touches diffX:diff_x diffY:diff_y];
             [colItemView setHighlighted:NO];
+            isHover = YES;
             break;
         }
     }
 
+    // hoverしてないところで離した場合
+    if (isHover == NO) {
+        [delegate_ collectionItemNoHoverRelease];
+    }
 }
 
 

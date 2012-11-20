@@ -47,9 +47,12 @@
     }
 }
 
-
-- (void)setDragAndDropMode:(BOOL)mode {
-    self.delaysContentTouches = !mode;
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    self.scrollEnabled = YES;
+    [self.nextResponder touchesCancelled:touches withEvent:event];
+    if ([myDelegate respondsToSelector:@selector(scrollViewTouchesCancelled:withEvent:)]) {
+        [myDelegate scrollViewTouchesCancelled:touches withEvent:event];
+    }
 }
 
 

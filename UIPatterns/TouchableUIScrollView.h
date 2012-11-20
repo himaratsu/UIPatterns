@@ -20,4 +20,5 @@
 - (void)scrollViewTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)scrollViewTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)scrollViewTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)scrollViewTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 @end

@@ -238,6 +238,10 @@
     }
 }
 
+- (void)scrollViewTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self disappearThumbViewWithAnimation];
+}
+
 #pragma mark -
 #pragma mark ActionImageViewDelegate
 
@@ -345,6 +349,10 @@
     point.x += x;
     point.y += y;
     [self disappearThumbViewOnCollectionWithAnimation:point];
+}
+
+- (void)collectionItemNoHoverRelease {
+    [self disappearThumbViewWithAnimation];
 }
 
 @end
