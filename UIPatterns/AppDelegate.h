@@ -8,12 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class FeedViewController;
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
-@property (strong, nonatomic) FeedViewController *viewController;
+@property (strong, nonatomic) UINavigationController *navController;
 
 @end

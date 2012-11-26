@@ -25,6 +25,9 @@
 		203C9CEC16526CF300C9DFE8 /* search_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 203C9CEB16526CF300C9DFE8 /* search_icon.png */; };
 		20947182165764F2002550EE /* PullUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20947181165764F2002550EE /* PullUpdateView.m */; };
 		20A90D6116511EAE00628502 /* UIPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A90D6016511EAE00628502 /* UIPatternView.m */; };
+		20B9B9BF1660B359009F29B8 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9B9BD1660B359009F29B8 /* CollectionViewController.m */; };
+		20B9B9C01660B359009F29B8 /* CollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 20B9B9BE1660B359009F29B8 /* CollectionViewController.xib */; };
+		20B9B9C81660BD31009F29B8 /* CollectionGetContentAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9B9C71660BD30009F29B8 /* CollectionGetContentAPI.m */; };
 		20BA6A881653E3310064728E /* CollectionNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A871653E3310064728E /* CollectionNavigationView.m */; };
 		20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A8B1653E3580064728E /* TsumamiView.m */; };
 		20BBADBE16525926002BF4BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BBADBC165258AC002BF4BA /* QuartzCore.framework */; };
@@ -68,6 +71,11 @@
 		20947181165764F2002550EE /* PullUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullUpdateView.m; sourceTree = "<group>"; };
 		20A90D5F16511EAE00628502 /* UIPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPatternView.h; sourceTree = "<group>"; };
 		20A90D6016511EAE00628502 /* UIPatternView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPatternView.m; sourceTree = "<group>"; };
+		20B9B9BC1660B359009F29B8 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		20B9B9BD1660B359009F29B8 /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		20B9B9BE1660B359009F29B8 /* CollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewController.xib; sourceTree = "<group>"; };
+		20B9B9C61660BD30009F29B8 /* CollectionGetContentAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionGetContentAPI.h; sourceTree = "<group>"; };
+		20B9B9C71660BD30009F29B8 /* CollectionGetContentAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionGetContentAPI.m; sourceTree = "<group>"; };
 		20BA6A861653E3310064728E /* CollectionNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionNavigationView.h; sourceTree = "<group>"; };
 		20BA6A871653E3310064728E /* CollectionNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionNavigationView.m; sourceTree = "<group>"; };
 		20BA6A8A1653E3580064728E /* TsumamiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TsumamiView.h; sourceTree = "<group>"; };
@@ -179,6 +187,8 @@
 			children = (
 				200D3F05164C4B0D00443D76 /* FeedViewController.h */,
 				200D3F06164C4B0D00443D76 /* FeedViewController.m */,
+				20B9B9BC1660B359009F29B8 /* CollectionViewController.h */,
+				20B9B9BD1660B359009F29B8 /* CollectionViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -212,6 +222,7 @@
 		200D3F14164C4CD800443D76 /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				20B9B9BE1660B359009F29B8 /* CollectionViewController.xib */,
 				200D3F08164C4B0D00443D76 /* FeedViewController.xib */,
 			);
 			name = xib;
@@ -226,6 +237,8 @@
 				200D3F1A164C557600443D76 /* FeedAPI.m */,
 				20C6608D1657F1580041006B /* CollectionGetAPI.h */,
 				20C6608E1657F1580041006B /* CollectionGetAPI.m */,
+				20B9B9C61660BD30009F29B8 /* CollectionGetContentAPI.h */,
+				20B9B9C71660BD30009F29B8 /* CollectionGetContentAPI.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -343,6 +356,7 @@
 				203C9CEC16526CF300C9DFE8 /* search_icon.png in Resources */,
 				20C6608B1657DAD70041006B /* collection_on.png in Resources */,
 				20C6608C1657DAD70041006B /* collection_off.png in Resources */,
+				20B9B9C01660B359009F29B8 /* CollectionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +384,8 @@
 				20C660851657CFE60041006B /* CollectionItemView.m in Sources */,
 				20C6608F1657F1580041006B /* CollectionGetAPI.m in Sources */,
 				20C660921657FA740041006B /* CollectionItemListView.m in Sources */,
+				20B9B9BF1660B359009F29B8 /* CollectionViewController.m in Sources */,
+				20B9B9C81660BD31009F29B8 /* CollectionGetContentAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

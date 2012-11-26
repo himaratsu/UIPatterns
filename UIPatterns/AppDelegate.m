@@ -16,11 +16,14 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[FeedViewController alloc] initWithNibName:@"FeedViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+    FeedViewController *feedVC = [[FeedViewController alloc] initWithNibName:@"FeedViewController" bundle:nil];
     
-    [Util hideStatusBar];
+    _navController = [[UINavigationController alloc] initWithRootViewController:feedVC];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = _navController;
     
+    self.navController.navigationBarHidden = YES;   // ナビゲーションバーを非表示
+    [Util hideStatusBar];                           // ステータスバーを非表示
     [self.window makeKeyAndVisible];
     return YES;
 }

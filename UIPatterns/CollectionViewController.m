@@ -1,27 +1,56 @@
 //
-//  ViewController.m
+//  CollectionViewController.m
 //  UIPatterns
 //
-//  Created by 平松 亮介 on 2012/11/09.
+//  Created by 平松 亮介 on 2012/11/24.
 //  Copyright (c) 2012年 mashroom. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "FeedViewController.h"
 #import "CollectionViewController.h"
-#import "FeedAPI.h"
-#import "UIPattern.h"
 
-@interface FeedViewController ()
+@interface CollectionViewController ()
 
 @end
 
-@implementation FeedViewController
+@implementation CollectionViewController
+@synthesize collectionId = collectionId_;
+
+#pragma mark ViewLifecycle
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    scrollView.frame = self.view.bounds;
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self _initLayout];
+    [self reload];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 #pragma mark -
 #pragma mark Initialization
 
-// レイアウト初期化
 - (void)_initLayout {
     // 全体のスクロールビュー
     scrollView = [[TouchableUIScrollView alloc] initWithFrame:self.view.bounds];
@@ -29,13 +58,8 @@
     scrollView.showsHorizontalScrollIndicator = YES;
     scrollView.showsVerticalScrollIndicator   = YES;
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
-    scrollView.delegate = self;     // UIScrollViewのデリゲート
     scrollView.myDelegate = self;   // TouchableUIScrollViewのデリゲート
     [self.view addSubview:scrollView];
-    
-    // 「引っ張って更新」ビュー
-    pullView = [[PullUpdateView alloc] initWithFrame:CGRectMake(0, -kPullUpdateViewHeight, 2048, kPullUpdateViewHeight)];
-    [scrollView addSubview:pullView];
     
     // 画面上部の青色ライン
     UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2048, 15)];
@@ -46,7 +70,7 @@
     
     // タイトル
     UILabel* topTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 15, 500, 100)];
-    topTitleLabel.text = @"UI Patterns";
+    topTitleLabel.text = @"Collections";
     topTitleLabel.font = [UIFont fontWithName:@"American Typewriter" size:56];
     topTitleLabel.textColor = kDefaultAccentColor;
     topTitleLabel.backgroundColor = [UIColor clearColor];
@@ -92,130 +116,24 @@
     
     // 右側のコレクションビュー
     ridhtCollectionView = [[CollectionNavigationView alloc]
-                                          initWithFrame:CGRectMake(1024-195, 50, 200, 700)];
+                           initWithFrame:CGRectMake(1024-195, 50, 200, 700)];
     [ridhtCollectionView moveToPositionBWithAnimation:NO];  // 最初は隠す
     ridhtCollectionView.delegate = self;
     [self.view addSubview:ridhtCollectionView];
-    
-    // API用のパラメータ格納庫
-    param = nil;
+
+
 }
 
-// 配置したUIPatternをビューから取り除く
-- (void)resetUIPatternLayout {
-    for (UIView* v in [scrollView subviews]) {
-        if (v.tag == kUIImageTag) {
-            [v removeFromSuperview];
-        }
-    }
-}
-
-// UIPatternを読み込み
 - (void)reload {
-    [self resetUIPatternLayout];
-    FeedAPI* feedAPI = [[FeedAPI alloc] initWithDelegate:self];
-    [feedAPI send:param];
-    param = nil;
+    collectionId_ = @"1111111111";
+    
+    CollectionGetContentAPI *collectionGetContentAPI
+    = [[CollectionGetContentAPI alloc] initWithDelegate:self];
+    [collectionGetContentAPI sendWithCollectionId:collectionId_];
 }
 
 #pragma mark -
-#pragma mark ViewLifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self _initLayout];
-    [self reload];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    scrollView.frame = self.view.bounds;
-    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - 
-#pragma mark Rotation
-
-- (BOOL)shouldAutorotate {
-    return NO;
-}
-
-- (UIInterfaceOrientation)interfaceOrientation {
-    return UIInterfaceOrientationMaskLandscape;
-}
-
--(BOOL)shouldAutorotateToInterfaceOrientation:
-(UIInterfaceOrientation)interfaceOrientation {
-    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft
-            || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-}
-
-- (NSUInteger)supportedInterfaceOrientations{
-    return UIInterfaceOrientationMaskLandscape;
-}
-
-#pragma mark -
-#pragma mark HttpRequestDelegate 
-
-- (void)didStartHttpResuest:(id)sender {
-    NSLog(@"通信スタート");
-}
-
-- (void)didEndHttpResuest:(id)sender {
-    NSLog(@"通信成功");
-    NSDictionary* result = (NSDictionary*)sender;
-    
-    int total = [[result objectForKey:@"totalCount"] intValue];
-    
-    // 描画領域を確保
-    CGFloat h = MAX(120+kUIPatternImageSizeHeight*(total/numberOfUIPatternInRow), 800);
-    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width,
-                                        h
-                                        );
-    
-    // UIPatternを配置
-    NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
-    for (int i=0; i<total; i++) {
-        int x = i % numberOfUIPatternInRow;
-        int y = i / numberOfUIPatternInRow;
-        
-        UIPattern* pattern = [uiPatterns objectAtIndex:i];
-        UIPatternView* lazyImageView = [[UIPatternView alloc]
-                                        initWithFrame:CGRectMake((kUIPatternImageSizeWidth+10)*x + kMarginLeft,
-                                                                 (kUIPatternImageSizeHeight+10)*y + 120,
-                                                                 kUIPatternImageSizeWidth - 20,
-                                                                 kUIPatternImageSizeHeight - 30)
-                                        withUrl:[NSURL URLWithString:pattern.imageUrl]];
-        lazyImageView.tag = kUIImageTag;
-        lazyImageView.delegate = self;
-        lazyImageView.uiPattern = pattern;
-        [lazyImageView startLoadImage];
-        [scrollView addSubview:lazyImageView];
-    }
-    
-    // D&D時の背景ビューを、前面に持ってきておく
-    [scrollView bringSubviewToFront:highliteBackView];
-}
-
-- (void)didErrorHttpRequest:(id)sender {
-    NSLog(@"通信エラー");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
-                                                    message:@"エラーが発生しました。\nネットワーク環境のあるところで再読み込みして下さい。"
-                                                   delegate:self
-                                          cancelButtonTitle:nil
-                                          otherButtonTitles:@"OK", nil];
-    [alert show];
-}
-
-#pragma mark -
-#pragma mark TouchableUIScrollDelegate
+#pragma mark TouchableUIScrollDelegate Method
 
 - (void)scrollViewTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     CGPoint point = [[touches anyObject] locationInView:self.view];
@@ -235,7 +153,7 @@
     [thumbView setFrame:frame];
     
     currentLocation = CGPointMake(frame.origin.x + frame.size.width/2,
-                                frame.origin.y + frame.size.height/2);
+                                  frame.origin.y + frame.size.height/2);
     
     // rightCollectionView上にのりかかった場合
     if (pt.x > 1024 - ridhtCollectionView.frame.size.width + kTsumamiSizeWidth) {
@@ -259,18 +177,50 @@
     [self disappearThumbViewWithAnimation];
 }
 
+
 #pragma mark -
-#pragma mark ActionImageViewDelegate
+#pragma mark CollectionItemHoverDelegate Method
 
-// 通常タップ
-- (void)UIImageViewSingleTap:(UIImage *)image {
-//    thumbView.image = image;
-
+- (void)collectionItemHoverRelease:(NSSet*)touches diffX:(CGFloat)x diffY:(CGFloat)y {
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+    point.x += x;
+    point.y += y;
+    [self disappearThumbViewOnCollectionWithAnimation:point];
 }
 
-// 長押しタップ
-- (void)UIImageViewLongTap:(UIImage *)image {
-    thumbView.image = image;
+- (void)collectionItemNoHoverRelease {
+    [self disappearThumbViewWithAnimation];
+}
+
+
+#pragma mark -
+#pragma mark CollectionItemViewDelegate Method
+
+- (void)collectionItemViewTap {
+    CollectionViewController* colViewController = [[CollectionViewController alloc] initWithNibName:@"CollectionViewController" bundle:nil];
+    // TODO: ここでコレクションidをセットする
+    [self.navigationController pushViewController:colViewController animated:NO];
+}
+
+#pragma mark -
+#pragma mark HttpRequestDelegate Method
+
+- (void)didStartHttpResuest:(id)result {
+    NSLog(@"つうしんかいし");
+}
+
+- (void)didEndHttpResuest:(id)result {
+   // TODO: ここでコレクションを配置
+}
+
+- (void)didErrorHttpRequest:(id)result {
+    NSLog(@"通信エラー");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
+                                                    message:@"エラーが発生しました。\nネットワーク環境のあるところで再読み込みして下さい。"
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:@"OK", nil];
+    [alert show];
 }
 
 #pragma mark -
@@ -288,7 +238,7 @@
     thumbView.transform = CGAffineTransformMakeScale(0.1, 0.1);
     [UIView animateWithDuration:0.3f
                      animations:^(void){
-                             thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+                         thumbView.transform = CGAffineTransformMakeScale(1.0, 1.0);
                      }
                      completion:^(BOOL finished) {
                          [ridhtCollectionView moveToPositionAWithAnimation:YES];
@@ -342,59 +292,11 @@
 }
 
 #pragma mark -
-#pragma mark UIScrollViewDelegate
-
-// ドラッグ中
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    LOG(@"x, y = %f, %f", scrollView.contentOffset.x, scrollView.contentOffset.y);
-    // スクロール量によって文言かえる
-    CGFloat y = scrollView.contentOffset.y;
-    if (y < -80) {
-        pullView.label.text = @"このまま指を離して更新！";
-    } else {
-        pullView.label.text = @"引っ張って更新";
-    }
-}
-
-// ドラッグ終了
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    CGFloat y = scrollView.contentOffset.y;
-    if (y < -80) {
-        [self reload];
-    }
-    pullView.label.text = @"引っ張って更新";
-}
-
-
-#pragma mark -
-#pragma mark CollectionItemHoverDelegate Method
-
-- (void)collectionItemHoverRelease:(NSSet*)touches diffX:(CGFloat)x diffY:(CGFloat)y {
-    CGPoint point = [[touches anyObject] locationInView:self.view];
-    point.x += x;
-    point.y += y;
-    [self disappearThumbViewOnCollectionWithAnimation:point];
-}
-
-- (void)collectionItemNoHoverRelease {
-    [self disappearThumbViewWithAnimation];
-}
-
-#pragma mark -
-#pragma mark CollectionItemViewDelegate Method
-
-- (void)collectionItemViewTap {
-    CollectionViewController* colViewController = [[CollectionViewController alloc] initWithNibName:@"CollectionViewController" bundle:nil];
-    // TODO: ここでコレクションidをセットする
-    [self.navigationController pushViewController:colViewController animated:NO];
-}
-
-#pragma mark -
 
 - (void)tapSettings {
     // カテゴリをセット
-    param = [NSMutableDictionary dictionary];
-    [param setObject:@"search" forKey:@"category"];
+//    param = [NSMutableDictionary dictionary];
+//    [param setObject:@"search" forKey:@"category"];
     
     // 再読み込み
     [self reload];

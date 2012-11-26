@@ -39,8 +39,8 @@
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.nextResponder touchesMoved:touches withEvent:event];
     if (longPressBegan) {
-        [self.nextResponder touchesMoved:touches withEvent:event];
         if ([myDelegate respondsToSelector:@selector(scrollViewTouchesMoved:withEvent:)]) {
             [myDelegate scrollViewTouchesMoved:touches withEvent:event];
         }

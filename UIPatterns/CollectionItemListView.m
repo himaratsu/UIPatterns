@@ -7,7 +7,6 @@
 //
 
 #import "CollectionItemListView.h"
-#import "CollectionItemView.h"
 
 @implementation CollectionItemListView
 @synthesize delegate = delegate_;
@@ -49,12 +48,14 @@
     NSArray* collections = [result objectForKey:@"collections"];
     for (int i=0; i<total; i++) {
         CollectionItem* colItem = [collections objectAtIndex:i];
+        LOG(@"[%d]%@", i, colItem);
         CollectionItemView* colItemView = [[CollectionItemView alloc]
                                         initWithFrame:CGRectMake(20,
                                                                  20 + 150*i,
                                                                  100,
                                                                  140)];
         colItemView.tag = kCollectionItemTag;
+        colItemView.delegate = delegate_;
         colItemView.collectionItem = colItem;
         [scrollView addSubview:colItemView];
     }
@@ -74,21 +75,34 @@
     CGPoint pt = [[touches anyObject] locationInView:scrollView];
     LOG(@"%f, %f", pt.x, pt.y);
     
-    // ナビゲーションバー上ではサムネイルは0.6倍のサイズとなっている
-    CGRect touchFrame = CGRectMake(pt.x-kThumbnailSizeWidth*0.6/2,
-                                   pt.y-kThumbnailSizeHeight*0.6/2,
-                                   kThumbnailSizeWidth*0.6,
-                                   kThumbnailSizeHeight*0.6);
+//    // ナビゲーションバー上ではサムネイルは0.6倍のサイズとなっている
+//    CGRect touchFrame = CGRectMake(pt.x-kThumbnailSizeWidth*0.6/2,
+//                                   pt.y-kThumbnailSizeHeight*0.6/2,
+//                                   kThumbnailSizeWidth*0.6,
+//                                   kThumbnailSizeHeight*0.6);
     
     for (UIView *v in [scrollView subviews]) {
-        CollectionItemView *colItemView = (CollectionItemView*)v;
-        if (CGRectContainsPoint(v.frame, pt)) {
-            // 衝突！
-            LOG(@"衝突 → %@", colItemView.collectionItem.title);
-            [colItemView setHighlighted:YES];
-        } else {
-            [colItemView setHighlighted:NO];
+        if ([v isMemberOfClass:[CollectionItemView class]]) {
+            CollectionItemView *colItemView = (CollectionItemView*)v;
+            if (CGRectContainsPoint(v.frame, pt)) {
+                // 衝突！
+                LOG(@"衝突 → %@", colItemView.collectionItem.title);
+                [colItemView setHighlighted:YES];
+            } else {
+                [colItemView setHighlighted:NO];
+            }
         }
+    }
+    
+    // スクロールビューの上下端に乗っかった場合、じわじわスクロールする
+    CGPoint navPt = [[touches anyObject] locationInView:self];
+    CGRect frameUpper = CGRectMake(0, 130, self.frame.size.width, 20);
+    CGRect frameBottom = CGRectMake(0, 130+self.frame.size.height-20, self.frame.size.width, 20);
+    if (CGRectContainsPoint(frameUpper, navPt)) {
+        // 上端 → 微小量下にスクロールする
+    }
+    else if (CGRectContainsPoint(frameBottom, navPt)) {
+        // 下端 → 微小量上にスクロールする
     }
     
 }
@@ -117,6 +131,5 @@
         [delegate_ collectionItemNoHoverRelease];
     }
 }
-
 
 @end

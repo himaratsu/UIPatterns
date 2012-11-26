@@ -58,7 +58,7 @@
     return self;
 }
 
-- (void)setDelegate:(id<CollectionItemHoverDelegate>)delegate {
+- (void)setDelegate:(id<CollectionItemHoverDelegate, CollectionItemViewDelegate>)delegate {
     collectionView.delegate = delegate;
     delegate_ = delegate;
 }

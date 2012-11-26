@@ -11,6 +11,7 @@
 @implementation CollectionItemView
 
 @synthesize collectionItem = collectionItem_;
+@synthesize delegate = delegate_;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -24,6 +25,8 @@
         UIImage *imageOff = [UIImage imageNamed:@"collection_off.png"];
         collectionItemTitleView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.width)];
         collectionItemTitleView.backgroundColor = [UIColor clearColor];
+        [collectionItemTitleView addTarget:self
+                                    action:@selector(collecionItemTouchUpInside) forControlEvents:UIControlEventTouchUpInside];
         [collectionItemTitleView setBackgroundImage:imageOff forState:UIControlStateNormal];
         [collectionItemTitleView setBackgroundImage:imageOn forState:UIControlStateHighlighted];
         [self addSubview:collectionItemTitleView];
@@ -49,5 +52,16 @@
 - (void)setHighlighted:(BOOL)boolean {
     [collectionItemTitleView setHighlighted:boolean];
 }
+
+
+#pragma mark -
+#pragma mark UserAction
+
+- (void)collecionItemTouchUpInside {
+    if ([delegate_ respondsToSelector:@selector(collectionItemViewTap)]) {
+        [delegate_ collectionItemViewTap];
+    }
+}
+
 
 @end
