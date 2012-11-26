@@ -31,6 +31,7 @@
 		20BA6A881653E3310064728E /* CollectionNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A871653E3310064728E /* CollectionNavigationView.m */; };
 		20BA6A8C1653E3580064728E /* TsumamiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BA6A8B1653E3580064728E /* TsumamiView.m */; };
 		20BBADBE16525926002BF4BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BBADBC165258AC002BF4BA /* QuartzCore.framework */; };
+		20BD42931663B1C500B994A7 /* CollectionAddItemAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BD42921663B1C500B994A7 /* CollectionAddItemAPI.m */; };
 		20BD44D516529DB600BB3829 /* UIPatternThumbView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BD44D416529DB600BB3829 /* UIPatternThumbView.m */; };
 		20C65FE7164E4D2700F9F343 /* UIPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C65FE6164E4D2700F9F343 /* UIPattern.m */; };
 		20C660811657CE740041006B /* CollectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 20C660801657CE740041006B /* CollectionItem.m */; };
@@ -81,6 +82,8 @@
 		20BA6A8A1653E3580064728E /* TsumamiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TsumamiView.h; sourceTree = "<group>"; };
 		20BA6A8B1653E3580064728E /* TsumamiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TsumamiView.m; sourceTree = "<group>"; };
 		20BBADBC165258AC002BF4BA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		20BD42911663B1C500B994A7 /* CollectionAddItemAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionAddItemAPI.h; sourceTree = "<group>"; };
+		20BD42921663B1C500B994A7 /* CollectionAddItemAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionAddItemAPI.m; sourceTree = "<group>"; };
 		20BD44D316529DB600BB3829 /* UIPatternThumbView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPatternThumbView.h; sourceTree = "<group>"; };
 		20BD44D416529DB600BB3829 /* UIPatternThumbView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPatternThumbView.m; sourceTree = "<group>"; };
 		20C65FE5164E4D2700F9F343 /* UIPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPattern.h; sourceTree = "<group>"; };
@@ -239,6 +242,8 @@
 				20C6608E1657F1580041006B /* CollectionGetAPI.m */,
 				20B9B9C61660BD30009F29B8 /* CollectionGetContentAPI.h */,
 				20B9B9C71660BD30009F29B8 /* CollectionGetContentAPI.m */,
+				20BD42911663B1C500B994A7 /* CollectionAddItemAPI.h */,
+				20BD42921663B1C500B994A7 /* CollectionAddItemAPI.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -386,6 +391,7 @@
 				20C660921657FA740041006B /* CollectionItemListView.m in Sources */,
 				20B9B9BF1660B359009F29B8 /* CollectionViewController.m in Sources */,
 				20B9B9C81660BD31009F29B8 /* CollectionGetContentAPI.m in Sources */,
+				20BD42931663B1C500B994A7 /* CollectionAddItemAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

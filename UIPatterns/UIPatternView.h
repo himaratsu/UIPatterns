@@ -29,6 +29,6 @@
 @protocol TapUIImageViewDelegate <NSObject>
 
 - (void)UIImageViewSingleTap:(UIImage*)image;   // タップ
-- (void)UIImageViewLongTap:(UIImage*)image;     // 長押しタップ
+- (void)UIImageViewLongTap:(NSString*)uipatternId image:(UIImage *)image;     // 長押しタップ
 
 @end

@@ -12,9 +12,9 @@
 
 @protocol HttpRequestDelegate
 @required
-- (void)didStartHttpResuest:(id)result;
-- (void)didEndHttpResuest:(id)result;
-- (void)didErrorHttpRequest:(id)result;
+- (void)didStartHttpResuest:(id)result type:(NSString*)type;
+- (void)didEndHttpResuest:(id)result type:(NSString*)type;
+- (void)didErrorHttpRequest:(id)result type:(NSString*)type;
 @end
 
 

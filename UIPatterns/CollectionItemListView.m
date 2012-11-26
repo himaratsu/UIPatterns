@@ -35,11 +35,11 @@
 #pragma mark -
 #pragma mark HttpRequestDelegate Method
 
-- (void)didStartHttpResuest:(id)sender {
+- (void)didStartHttpResuest:(id)sender type:(NSString *)type {
     
 }
 
-- (void)didEndHttpResuest:(id)sender {
+- (void)didEndHttpResuest:(id)sender type:(NSString *)type {
     NSDictionary *result = (NSDictionary*)sender;
     
     int total = [[result objectForKey:@"totalCount"] intValue];
@@ -62,7 +62,7 @@
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, 40+150*total);
 }
 
-- (void)didErrorHttpRequest:(id)sender {
+- (void)didErrorHttpRequest:(id)sender type:(NSString *)type {
     
 }
 
@@ -119,7 +119,13 @@
             // ホバー中のコレクションの中心に向けてAction
             CGFloat diff_x = colItemView.center.x - pt.x;
             CGFloat diff_y = colItemView.center.y - pt.y;
-            [delegate_ collectionItemHoverRelease:touches diffX:diff_x diffY:diff_y];
+            LOG(@"colId = %@", colItemView);
+            LOG(@"colId = %@", colItemView.collectionItem);
+            LOG(@"colId = %@", colItemView.collectionItem.collectionId);
+            [delegate_ collectionItemHoverRelease:touches
+                                            diffX:diff_x
+                                            diffY:diff_y
+                                     collectionId:colItemView.collectionItem.collectionId];
             [colItemView setHighlighted:NO];
             isHover = YES;
             break;

@@ -205,15 +205,15 @@
 #pragma mark -
 #pragma mark HttpRequestDelegate Method
 
-- (void)didStartHttpResuest:(id)result {
+- (void)didStartHttpResuest:(id)result type:(NSString *)type {
     NSLog(@"つうしんかいし");
 }
 
-- (void)didEndHttpResuest:(id)result {
+- (void)didEndHttpResuest:(id)result type:(NSString *)type {
    // TODO: ここでコレクションを配置
 }
 
-- (void)didErrorHttpRequest:(id)result {
+- (void)didErrorHttpRequest:(id)result type:(NSString *)type {
     NSLog(@"通信エラー");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
                                                     message:@"エラーが発生しました。\nネットワーク環境のあるところで再読み込みして下さい。"

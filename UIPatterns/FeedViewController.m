@@ -11,6 +11,7 @@
 #import "CollectionViewController.h"
 #import "FeedAPI.h"
 #import "UIPattern.h"
+#import "CollectionAddItemAPI.h"
 
 @interface FeedViewController ()
 
@@ -164,47 +165,66 @@
 #pragma mark -
 #pragma mark HttpRequestDelegate 
 
-- (void)didStartHttpResuest:(id)sender {
+- (void)didStartHttpResuest:(id)sender type:(NSString *)type {
     NSLog(@"通信スタート");
 }
 
-- (void)didEndHttpResuest:(id)sender {
+- (void)didEndHttpResuest:(id)sender type:(NSString *)type {
     NSLog(@"通信成功");
-    NSDictionary* result = (NSDictionary*)sender;
     
-    int total = [[result objectForKey:@"totalCount"] intValue];
-    
-    // 描画領域を確保
-    CGFloat h = MAX(120+kUIPatternImageSizeHeight*(total/numberOfUIPatternInRow), 800);
-    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width,
-                                        h
-                                        );
-    
-    // UIPatternを配置
-    NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
-    for (int i=0; i<total; i++) {
-        int x = i % numberOfUIPatternInRow;
-        int y = i / numberOfUIPatternInRow;
+    if ([type isEqualToString:@"FeedAPI"]) {
+        NSDictionary* result = (NSDictionary*)sender;
         
-        UIPattern* pattern = [uiPatterns objectAtIndex:i];
-        UIPatternView* lazyImageView = [[UIPatternView alloc]
-                                        initWithFrame:CGRectMake((kUIPatternImageSizeWidth+10)*x + kMarginLeft,
-                                                                 (kUIPatternImageSizeHeight+10)*y + 120,
-                                                                 kUIPatternImageSizeWidth - 20,
-                                                                 kUIPatternImageSizeHeight - 30)
-                                        withUrl:[NSURL URLWithString:pattern.imageUrl]];
-        lazyImageView.tag = kUIImageTag;
-        lazyImageView.delegate = self;
-        lazyImageView.uiPattern = pattern;
-        [lazyImageView startLoadImage];
-        [scrollView addSubview:lazyImageView];
+        int total = [[result objectForKey:@"totalCount"] intValue];
+        
+        // 描画領域を確保
+        CGFloat h = MAX(120+kUIPatternImageSizeHeight*(total/numberOfUIPatternInRow), 800);
+        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width,
+                                            h
+                                            );
+        
+        // UIPatternを配置
+        NSArray* uiPatterns = [result objectForKey:@"uipatterns"];
+        for (int i=0; i<total; i++) {
+            int x = i % numberOfUIPatternInRow;
+            int y = i / numberOfUIPatternInRow;
+            
+            UIPattern* pattern = [uiPatterns objectAtIndex:i];
+            UIPatternView* lazyImageView = [[UIPatternView alloc]
+                                            initWithFrame:CGRectMake((kUIPatternImageSizeWidth+10)*x + kMarginLeft,
+                                                                     (kUIPatternImageSizeHeight+10)*y + 120,
+                                                                     kUIPatternImageSizeWidth - 20,
+                                                                     kUIPatternImageSizeHeight - 30)
+                                            withUrl:[NSURL URLWithString:pattern.imageUrl]];
+            lazyImageView.tag = kUIImageTag;
+            lazyImageView.delegate = self;
+            lazyImageView.uiPattern = pattern;
+            [lazyImageView startLoadImage];
+            [scrollView addSubview:lazyImageView];
+        }
+        
+        // D&D時の背景ビューを、前面に持ってきておく
+        [scrollView bringSubviewToFront:highliteBackView];
     }
-    
-    // D&D時の背景ビューを、前面に持ってきておく
-    [scrollView bringSubviewToFront:highliteBackView];
+    else if ([type isEqualToString:@"CollectionAddItemAPI"]) {
+        NSLog(@"ああああああああああ");
+        NSString *title, *message;
+        NSDictionary* result = (NSDictionary*)sender;
+        NSString* status = [result objectForKey:@"status"];
+        if ([status isEqualToString:@"Success"]) {
+            title   = @"登録完了";
+            message = @"コレクションにアイテムを追加しました。";
+        }
+        else {
+            title   = @"エラー";
+            message = @"アイテム追加に失敗しました。再度試して見て下さい。";
+        }
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
 }
 
-- (void)didErrorHttpRequest:(id)sender {
+- (void)didErrorHttpRequest:(id)sender type:(NSString *)type {
     NSLog(@"通信エラー");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
                                                     message:@"エラーが発生しました。\nネットワーク環境のあるところで再読み込みして下さい。"
@@ -269,7 +289,8 @@
 }
 
 // 長押しタップ
-- (void)UIImageViewLongTap:(UIImage *)image {
+- (void)UIImageViewLongTap:(NSString*)uipatternId image:(UIImage *)image {
+    thumbView.uipatternId = uipatternId;
     thumbView.image = image;
 }
 
@@ -369,11 +390,18 @@
 #pragma mark -
 #pragma mark CollectionItemHoverDelegate Method
 
-- (void)collectionItemHoverRelease:(NSSet*)touches diffX:(CGFloat)x diffY:(CGFloat)y {
+- (void)collectionItemHoverRelease:(NSSet*)touches diffX:(CGFloat)x diffY:(CGFloat)y collectionId:(NSString*)collectionId{
     CGPoint point = [[touches anyObject] locationInView:self.view];
     point.x += x;
     point.y += y;
     [self disappearThumbViewOnCollectionWithAnimation:point];
+    
+    // コレクションにアイテムを追加
+    CollectionAddItemAPI* collectionAddItemAPI = [[CollectionAddItemAPI alloc] initWithDelegate:self];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    [parameters setObject:collectionId forKey:@"collection_id"];
+    [parameters setObject:thumbView.uipatternId forKey:@"uipattern_id"];
+    [collectionAddItemAPI send:parameters];
 }
 
 - (void)collectionItemNoHoverRelease {

@@ -106,15 +106,15 @@
 #pragma mark HttpRequestDelegate Method
 
 - (void)_didStartHttpRequest {
-    [delegate_ didStartHttpResuest:nil];
+    [delegate_ didStartHttpResuest:nil type:[[self class] description]];
 }
 
 - (void)_didEndHttpRequest:(NSDictionary*)result {
-    [delegate_ didEndHttpResuest:result];
+    [delegate_ didEndHttpResuest:result type:[[self class] description]];
 }
 
 - (void)_didErrorHttpRequest:(NSError*)error {
-    [delegate_ didErrorHttpRequest:error];
+    [delegate_ didErrorHttpRequest:error type:[[self class] description]];
 }
 
 @end

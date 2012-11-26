@@ -12,6 +12,7 @@
 
 @implementation UIPatternThumbView
 
+@synthesize uipatternId = uipatternId_;
 @synthesize image = image_;
 
 - (id)initWithFrame:(CGRect)frame

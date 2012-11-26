@@ -13,6 +13,7 @@
     UIImageView* imageView;
 }
 
+@property (nonatomic, weak) NSString* uipatternId;  // オブジェクトId
 @property (nonatomic, weak) UIImage* image; // サムネイル画像
 
 @end

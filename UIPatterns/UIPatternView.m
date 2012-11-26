@@ -158,8 +158,8 @@ typedef enum LazyImageViewTag_ {
 
 - (void)UIImageViewLongTap {
     LOG(@"長押しタップ");
-    if ([delegate_ respondsToSelector:@selector(UIImageViewLongTap:)]) {
-        [delegate_ UIImageViewLongTap:self.image];
+    if ([delegate_ respondsToSelector:@selector(UIImageViewLongTap:image:)]) {
+        [delegate_ UIImageViewLongTap:self.uiPattern.id image:self.image];
     }
 }
 
