@@ -15,8 +15,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        collectionAddView = [[CollectionItemAddView alloc] initWithFrame:CGRectMake(20, 0, 100, 100)];
+        [self addSubview:collectionAddView];
+        
         // Initialization code
-        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 130, frame.size.width, frame.size.height-140)];
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 140, frame.size.width, frame.size.height-140)];
         scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
         [self addSubview:scrollView];
         
@@ -31,6 +34,10 @@
     [collectionGetApi send];
 }
 
+- (void)setDelegate:(id<CollectionItemHoverDelegate,CollectionItemViewDelegate>)delegate {
+    collectionAddView.delegate = delegate;
+    delegate_ = delegate;
+}
 
 #pragma mark -
 #pragma mark HttpRequestDelegate Method
@@ -72,15 +79,21 @@
 
 - (void)scrollTouchMoved:(NSSet*)touches {
     LOG_CURRENT_METHOD;
-    CGPoint pt = [[touches anyObject] locationInView:scrollView];
+    CGPoint pt = [[touches anyObject] locationInView:self];
     LOG(@"%f, %f", pt.x, pt.y);
     
-//    // ナビゲーションバー上ではサムネイルは0.6倍のサイズとなっている
-//    CGRect touchFrame = CGRectMake(pt.x-kThumbnailSizeWidth*0.6/2,
-//                                   pt.y-kThumbnailSizeHeight*0.6/2,
-//                                   kThumbnailSizeWidth*0.6,
-//                                   kThumbnailSizeHeight*0.6);
+    // コレクション追加ボタンとの衝突判定
+    if (CGRectContainsPoint(collectionAddView.frame, pt)) {
+        // 衝突！
+        LOG(@"しょうとつ！");
+        [collectionAddView setHighlighted:YES];
+        return;
+    } else {
+        [collectionAddView setHighlighted:NO];
+    }
     
+    // コレクションアイテムとの衝突判定
+    pt = [[touches anyObject] locationInView:scrollView];
     for (UIView *v in [scrollView subviews]) {
         if ([v isMemberOfClass:[CollectionItemView class]]) {
             CollectionItemView *colItemView = (CollectionItemView*)v;
@@ -94,7 +107,7 @@
         }
     }
     
-    // スクロールビューの上下端に乗っかった場合、じわじわスクロールする
+    // スクロールビューの上下端に乗っかった場合、じわじわスクロールする（未実装）
     CGPoint navPt = [[touches anyObject] locationInView:self];
     CGRect frameUpper = CGRectMake(0, 130, self.frame.size.width, 20);
     CGRect frameBottom = CGRectMake(0, 130+self.frame.size.height-20, self.frame.size.width, 20);
@@ -109,10 +122,23 @@
 
 - (void)scrollTouchEnded:(NSSet*)touches {
     LOG_CURRENT_METHOD;
-    CGPoint pt = [[touches anyObject] locationInView:scrollView];
+    CGPoint pt = [[touches anyObject] locationInView:self];
     LOG(@"%f, %f", pt.x, pt.y);
     
-    BOOL isHover = NO;
+    // コレクション追加ボタン上でリリース
+    if (CGRectContainsPoint(collectionAddView.frame, pt)) {
+        CGFloat diff_x = collectionAddView.center.x - pt.x;
+        CGFloat diff_y = collectionAddView.center.y - pt.y;
+        [delegate_ collectionItemHoverRelease:touches
+                                        diffX:diff_x
+                                        diffY:diff_y
+                                 collectionId:@"add"];
+        [collectionAddView setHighlighted:NO];
+        return;
+    }
+    
+    pt = [[touches anyObject] locationInView:scrollView];
+    // コレクションアイテム上でリリース
     for (UIView *v in [scrollView subviews]) {
         CollectionItemView *colItemView = (CollectionItemView*)v;
         if (CGRectContainsPoint(v.frame, pt)) {
@@ -122,20 +148,19 @@
             LOG(@"colId = %@", colItemView);
             LOG(@"colId = %@", colItemView.collectionItem);
             LOG(@"colId = %@", colItemView.collectionItem.collectionId);
+            LOG(@"colId = %@", [colItemView.collectionItem.collectionId class]);
             [delegate_ collectionItemHoverRelease:touches
                                             diffX:diff_x
                                             diffY:diff_y
                                      collectionId:colItemView.collectionItem.collectionId];
             [colItemView setHighlighted:NO];
-            isHover = YES;
-            break;
+            return;
         }
     }
 
     // hoverしてないところで離した場合
-    if (isHover == NO) {
-        [delegate_ collectionItemNoHoverRelease];
-    }
+    [delegate_ collectionItemNoHoverRelease];
+
 }
 
 @end

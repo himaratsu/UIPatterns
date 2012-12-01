@@ -196,10 +196,16 @@
 #pragma mark -
 #pragma mark CollectionItemViewDelegate Method
 
-- (void)collectionItemViewTap {
-    CollectionViewController* colViewController = [[CollectionViewController alloc] initWithNibName:@"CollectionViewController" bundle:nil];
-    // TODO: ここでコレクションidをセットする
-    [self.navigationController pushViewController:colViewController animated:NO];
+- (void)collectionItemViewTap:(NSString*)sender {
+    if ([sender isEqualToString:@"CollectionItemView"]) {
+        CollectionViewController* colViewController = [[CollectionViewController alloc] initWithNibName:@"CollectionViewController" bundle:nil];
+        // TODO: ここでコレクションidをセットする
+        [self.navigationController pushViewController:colViewController animated:NO];
+    }
+    else if ([sender isEqualToString:@"CollectionItemAddView"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"test" message:@"add" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
 }
 
 #pragma mark -

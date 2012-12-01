@@ -25,5 +25,5 @@
 
 
 @protocol CollectionItemViewDelegate <NSObject>
-- (void)collectionItemViewTap;
+- (void)collectionItemViewTap:(NSString*)sender;
 @end

@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CollectionGetAPI.h"
 #import "CollectionItemView.h"
+#import "CollectionItemAddView.h"
 
 @protocol CollectionItemHoverDelegate;
 
 @interface CollectionItemListView : UIView <HttpRequestDelegate> {
     UIScrollView *scrollView;
+    CollectionItemAddView *collectionAddView;
 }
 
 @property (nonatomic, weak) id<CollectionItemHoverDelegate, CollectionItemViewDelegate> delegate;

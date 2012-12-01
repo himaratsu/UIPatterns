@@ -396,12 +396,22 @@
     point.y += y;
     [self disappearThumbViewOnCollectionWithAnimation:point];
     
-    // コレクションにアイテムを追加
-    CollectionAddItemAPI* collectionAddItemAPI = [[CollectionAddItemAPI alloc] initWithDelegate:self];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    [parameters setObject:collectionId forKey:@"collection_id"];
-    [parameters setObject:thumbView.uipatternId forKey:@"uipattern_id"];
-    [collectionAddItemAPI send:parameters];
+    // collectionIdをそのまま使うと NSCFNumber として認識されてしまうため
+    NSString* colId = [NSString stringWithFormat:@"%@", collectionId];
+    
+    if ([colId isEqualToString:@"add"]) {
+        // コレクションを追加
+        // TODO: コレクション作成画面へ遷移
+        LOG(@"コレクションを新たに作ります。");
+    }
+    else {
+        // コレクションにアイテムを追加
+        CollectionAddItemAPI* collectionAddItemAPI = [[CollectionAddItemAPI alloc] initWithDelegate:self];
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        [parameters setObject:collectionId forKey:@"collection_id"];
+        [parameters setObject:thumbView.uipatternId forKey:@"uipattern_id"];
+        [collectionAddItemAPI send:parameters];
+    }
 }
 
 - (void)collectionItemNoHoverRelease {
@@ -411,10 +421,16 @@
 #pragma mark -
 #pragma mark CollectionItemViewDelegate Method
 
-- (void)collectionItemViewTap {
-    CollectionViewController* colViewController = [[CollectionViewController alloc] initWithNibName:@"CollectionViewController" bundle:nil];
-    // TODO: ここでコレクションidをセットする
-    [self.navigationController pushViewController:colViewController animated:NO];
+- (void)collectionItemViewTap:(NSString*)sender {
+    if ([sender isEqualToString:@"CollectionItemView"]) {
+        CollectionViewController* colViewController = [[CollectionViewController alloc] initWithNibName:@"CollectionViewController" bundle:nil];
+        // TODO: ここでコレクションidをセットする
+        [self.navigationController pushViewController:colViewController animated:NO];
+    }
+    else if ([sender isEqualToString:@"CollectionItemAddView"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"test" message:@"add" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
 }
 
 #pragma mark -

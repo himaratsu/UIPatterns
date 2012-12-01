@@ -23,6 +23,7 @@
 		200D3F18164C510C00443D76 /* CommonAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F17164C510C00443D76 /* CommonAPI.m */; };
 		200D3F1B164C557600443D76 /* FeedAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 200D3F1A164C557600443D76 /* FeedAPI.m */; };
 		203C9CEC16526CF300C9DFE8 /* search_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 203C9CEB16526CF300C9DFE8 /* search_icon.png */; };
+		205D2D801669F280002CC933 /* CollectionItemAddView.m in Sources */ = {isa = PBXBuildFile; fileRef = 205D2D7F1669F280002CC933 /* CollectionItemAddView.m */; };
 		20947182165764F2002550EE /* PullUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20947181165764F2002550EE /* PullUpdateView.m */; };
 		20A90D6116511EAE00628502 /* UIPatternView.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A90D6016511EAE00628502 /* UIPatternView.m */; };
 		20B9B9BF1660B359009F29B8 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 20B9B9BD1660B359009F29B8 /* CollectionViewController.m */; };
@@ -68,6 +69,8 @@
 		200D3F19164C557600443D76 /* FeedAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedAPI.h; sourceTree = "<group>"; };
 		200D3F1A164C557600443D76 /* FeedAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedAPI.m; sourceTree = "<group>"; };
 		203C9CEB16526CF300C9DFE8 /* search_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_icon.png; sourceTree = "<group>"; };
+		205D2D7E1669F280002CC933 /* CollectionItemAddView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionItemAddView.h; sourceTree = "<group>"; };
+		205D2D7F1669F280002CC933 /* CollectionItemAddView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionItemAddView.m; sourceTree = "<group>"; };
 		20947180165764F2002550EE /* PullUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullUpdateView.h; sourceTree = "<group>"; };
 		20947181165764F2002550EE /* PullUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullUpdateView.m; sourceTree = "<group>"; };
 		20A90D5F16511EAE00628502 /* UIPatternView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPatternView.h; sourceTree = "<group>"; };
@@ -255,6 +258,8 @@
 				20BA6A871653E3310064728E /* CollectionNavigationView.m */,
 				20BA6A8A1653E3580064728E /* TsumamiView.h */,
 				20BA6A8B1653E3580064728E /* TsumamiView.m */,
+				205D2D7E1669F280002CC933 /* CollectionItemAddView.h */,
+				205D2D7F1669F280002CC933 /* CollectionItemAddView.m */,
 				20C660831657CFE60041006B /* CollectionItemView.h */,
 				20C660841657CFE60041006B /* CollectionItemView.m */,
 				20C660901657FA740041006B /* CollectionItemListView.h */,
@@ -392,6 +397,7 @@
 				20B9B9BF1660B359009F29B8 /* CollectionViewController.m in Sources */,
 				20B9B9C81660BD31009F29B8 /* CollectionGetContentAPI.m in Sources */,
 				20BD42931663B1C500B994A7 /* CollectionAddItemAPI.m in Sources */,
+				205D2D801669F280002CC933 /* CollectionItemAddView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

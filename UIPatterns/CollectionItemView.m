@@ -58,8 +58,8 @@
 #pragma mark UserAction
 
 - (void)collecionItemTouchUpInside {
-    if ([delegate_ respondsToSelector:@selector(collectionItemViewTap)]) {
-        [delegate_ collectionItemViewTap];
+    if ([delegate_ respondsToSelector:@selector(collectionItemViewTap:)]) {
+        [delegate_ collectionItemViewTap:[[self class] description]];
     }
 }
 
